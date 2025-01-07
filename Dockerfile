@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Step 4: Install dependencies
-RUN npm install --frozen-lockfile
+RUN --mount=type=cache,target=/root/.npm npm install --frozen-lockfile
 
 # Step 5: Copy all project files
 COPY . .
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Step 7: Install only production dependencies
-RUN npm prune --production
+RUN --mount=type=cache,target=/root/.npm npm prune --production
 
 # Step 8: Use a minimal Node.js image for the final build
 FROM node:18-alpine
