@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
+const apiAddress = process.env.NEXT_PUBLIC_API_ADDRESS;
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +24,7 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch(new URL("/api/auth/login", apiAddress).href, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -31,12 +33,15 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("authToken", data.token); // Save token to localStorage
+        const { accessToken, refreshToken } = data
+        localStorage.setItem("accessToken", accessToken); // Save token to localStorage
+        localStorage.setItem("refreshToken", refreshToken); // Save token to localStorage
         router.push("/"); // Redirect to home page
       } else {
         setError(data.message || "Invalid login credentials.");
       }
     } catch (err) {
+      console.log({ err })
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
@@ -84,7 +89,7 @@ return (
                         : "bg-blue-500 hover:bg-blue-600"
                 }`}
             >
-                {loading ? "Logging in..." : "Login"}
+                {loading ? "در حال ورود" : "ورود"}
             </button>
         </form>
     </div>
