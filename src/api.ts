@@ -90,5 +90,10 @@ export const api = {
         getMe: () => {
             return axios.get<any, ExtendedAxiosResponse<GeneralResponse<{ email: string }>>>('/api/users/me');
         }
-    }
+    },
+    sheets: {
+        get: (projectId: number) => {
+            return axios.get<any, ExtendedAxiosResponse<GeneralResponse<any>>>('api/sheets/project', { params: { projectId}});
+        }
+    },
 };
