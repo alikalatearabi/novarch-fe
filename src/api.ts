@@ -1,3 +1,4 @@
+'use client'
 import Axios, { AxiosResponse } from 'axios';
 
 interface GeneralResponse<T> {
@@ -12,7 +13,7 @@ interface ExtendedAxiosResponse<T = any> extends AxiosResponse<T> {
 }
 
 // Axios.defaults.withCredentials = true;
-const baseURL = process.env.NEXT_PUBLIC_API_ADDRESS || window.location.origin;
+const baseURL = process.env.NEXT_PUBLIC_API_ADDRESS;
 const axios = Axios.create({ baseURL: baseURL });
 
 interface IPagination {
@@ -38,7 +39,11 @@ const refreshAccessToken = () =>
         headers: { Authorization: `Bearer ${token().refreshToken}` },
     })
         .then((res) => res.status === 200 && res.data && res.data.data)
-        .catch((e) => (window.location.href = '/login'));
+        .catch((e) => {
+            if (window !== undefined) {
+                window.location.href = '/login'
+            }
+        });
 
 axios.interceptors.response.use(
     (response) => {

@@ -5,6 +5,7 @@ import SheetDetail from "@/components/sheets/SheetDetail";
 import SheetCard from "@/components/sheets/SheetCard";
 import SheetsTimelineRoot from "@/components/sheets/SheetsTimelineRoot";
 import { useSelector } from "react-redux";
+import { selectSheetsDetail } from "@/slices/sheetsSlices";
 
 const Page = () => {
   const sheetsDetail = useSelector(selectSheetsDetail);

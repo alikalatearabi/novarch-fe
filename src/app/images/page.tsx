@@ -1,17 +1,17 @@
-"use client";
+'use client';
+
+import { Button } from "@/components/ui/button";
 import React from "react";
-import ImageRoot from "./ImageRoot";
-import { useSelector, useDispatch } from "react-redux";
+import ImageRoot from "@/components/image/ImageRoot";
 import {
   selectImageSplitView,
   selectImageSplitViewLock,
   RsetImageSplitViewLock,
 } from "@/slices/imageSlices";
-import { Button } from "../ui/button";
+import { useDispatch, useSelector } from "react-redux";
 import { Lock, Unlock } from "lucide-react";
 
-
-const ImageIndex = () => {
+const Page = () => {
   const dispatch = useDispatch();
   const imageSplitView = useSelector(selectImageSplitView);
   const imageSplitViewLock = useSelector(selectImageSplitViewLock);
@@ -19,7 +19,7 @@ const ImageIndex = () => {
   return (
     <div id="container" className="relative">
       {!imageSplitView ? (
-        <ImageRoot/>
+        <ImageRoot />
       ) : (
         <div className="flex gap-2 transition-all">
           <ImageRoot />
@@ -27,6 +27,7 @@ const ImageIndex = () => {
         </div>
       )}
       {imageSplitView && (
+        // @ts-ignore
         <Button
           className={`absolute top-1/2 left-1/2 px-1.5 transform -translate-x-1/2 -translate-y-1/2 ${
             !imageSplitViewLock ? "bg-white hover:bg-gray-100" : "bg-blue-500 hover:bg-blue-400"
@@ -42,4 +43,4 @@ const ImageIndex = () => {
   );
 };
 
-export default ImageIndex;
+export default Page;
