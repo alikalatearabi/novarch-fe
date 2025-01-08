@@ -4,8 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
-const apiAddress = process.env.NEXT_PUBLIC_API_ADDRESS;
-
 const LoginPage = () => {
   const auth = useAuth();
   const [email, setEmail] = useState("");

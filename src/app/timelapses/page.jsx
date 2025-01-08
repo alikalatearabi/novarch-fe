@@ -1,11 +1,13 @@
-import TimelapsRoot from "@/components/timelaps/TimelapsRoot";
+import TimelapsHeader from "@/components/timelaps/header/TimelapsHeader";
+import TimelapsCard from "@/components/timelaps/TimelapsCard";
 import React from "react";
 
 const page = () => {
   return (
-    <div>
-      <TimelapsRoot />
-    </div>
+      <div id="rootContainer">
+        <TimelapsHeader />
+        <TimelapsCard />
+      </div>
   );
 };
 
