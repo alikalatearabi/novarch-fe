@@ -98,7 +98,22 @@ export const api = {
     },
     sheets: {
         get: (projectId: number) => {
-            return axios.get<any, ExtendedAxiosResponse<GeneralResponse<any>>>('api/sheets/project', { params: { projectId}});
+            return axios.get<any, ExtendedAxiosResponse<GeneralResponse<any>>>('/api/sheets', { params: { projectId}});
+        },
+        post: (data: any) => {
+            return axios.post<any, ExtendedAxiosResponse<GeneralResponse<any>>>('/api/sheets', data, {
+                headers: {
+                    'Content-Type' : 'multipart/form-data',
+                }
+            });
         }
     },
+    project: {
+        create: (data: any) => {
+            return axios.post<any, ExtendedAxiosResponse<GeneralResponse<any>>>('/api/project', data);
+        },
+        getAll: () => {
+            return axios.get<any, ExtendedAxiosResponse<GeneralResponse<any>>>('/api/project');
+        }
+    }
 };
