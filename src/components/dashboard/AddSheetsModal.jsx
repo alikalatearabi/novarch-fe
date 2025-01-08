@@ -22,7 +22,7 @@ const AddSheetsModal = ({ onClose, onAddSheet, projectId }) => {
       // formData.append("title", sheetTitle);
       formData.append("projectId", projectId);
 
-      const response = await fetch("http://localhost:8000/api/sheets", {
+      const response = await fetch("https://app.novaarchai.com/api/sheets", {
         method: "POST",
         body: formData,
       });

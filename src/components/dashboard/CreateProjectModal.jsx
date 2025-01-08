@@ -16,7 +16,7 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:8000/project", {
+      const response = await fetch("https://app.novaarchai.com/api/project", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: projectName }),

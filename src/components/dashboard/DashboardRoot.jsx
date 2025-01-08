@@ -14,7 +14,7 @@ const DashboardRoot = ({ children }) => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch("http://localhost:8000/project/all", {
+        const response = await fetch("https://app.novaarchai.com/api/project/all", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         });
