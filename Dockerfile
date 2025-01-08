@@ -1,5 +1,5 @@
 # Step 1: Use a Node.js base image
-FROM node:18-alpine AS builder
+FROM node:22-alpine AS builder
 
 # Step 2: Set working directory in the container
 WORKDIR /app
@@ -20,7 +20,7 @@ RUN npm run build
 RUN --mount=type=cache,target=/root/.npm npm prune --production
 
 # Step 8: Use a minimal Node.js image for the final build
-FROM node:18-alpine
+FROM node:22-alpine
 
 # Step 9: Set working directory for the production container
 WORKDIR /app
