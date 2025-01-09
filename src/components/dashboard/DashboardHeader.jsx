@@ -37,8 +37,8 @@ const DashboardHeader = ({ projectName }) => {
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center gap-5">
             <div id="userDetail" className="flex flex-col">
-              <span>شایان گلستانی پور</span>
-              <span className="text-[12px] mt-1 text-gray-700">g.shayan5529@gmail.com</span>
+              <span>ali kalate</span>
+              <span className="text-[12px] mt-1 text-gray-700">ali.kalate89@hotmail.com</span>
             </div>
             <div id="userAvatar" className="bg-gray-300 p-4 rounded-full">
               <User color="white" />

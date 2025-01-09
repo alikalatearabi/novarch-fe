@@ -6,16 +6,24 @@ import { ProjectProvider } from "../context/projectContext";
 import DashboardRoot from "@/components/dashboard/DashboardRoot";
 import "react-calendar-datetime-picker/dist/style.css";
 import "./globals.css";
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { usePathname } from "next/navigation";
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+  const isAuthPage = pathname === "/login"; 
+
   return (
     <html lang="en">
       <body className={iranSans.className}>
         <ReduxStoreProviders>
           <AuthProvider>
             <ProjectProvider>
-              <DashboardRoot>{children}</DashboardRoot>
+              {isAuthPage ? (
+                <>{children}</> 
+              ) : (
+                <DashboardRoot>{children}</DashboardRoot>
+              )}
             </ProjectProvider>
           </AuthProvider>
         </ReduxStoreProviders>
