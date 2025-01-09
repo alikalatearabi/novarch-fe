@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Plans from "../../../public/images/plansImage.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -9,8 +9,6 @@ import {
   selectSheetsView,
   RsetSheetsCurrent,
   RsetSheetsDetail,
-  selectSheetsDetail,
-  selectSheetsCurrent,
   RsetSheetsView,
 } from "@/slices/sheetsSlices";
 

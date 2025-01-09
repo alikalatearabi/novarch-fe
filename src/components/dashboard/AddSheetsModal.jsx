@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { api } from "@/api";
 
 const AddSheetsModal = ({ onClose, onAddSheet, projectId }) => {
   const [sheetFile, setSheetFile] = useState(null);
@@ -22,17 +23,13 @@ const AddSheetsModal = ({ onClose, onAddSheet, projectId }) => {
       // formData.append("title", sheetTitle);
       formData.append("projectId", projectId);
 
-      const response = await fetch("http://localhost:8000/api/sheets", {
-        method: "POST",
-        body: formData,
-      });
+      const { ok, data } = await api.sheets.post(formData)
 
-      if (!response.ok) {
+      if (!ok) {
         const errorResponse = await response.json();
         throw new Error(errorResponse.message || "خطا در آپلود شیت");
       }
 
-      const data = await response.json();
       onAddSheet({ title: sheetTitle, file: sheetFile }); 
       onClose();
     } catch (err) {

@@ -9,6 +9,7 @@ import SidebarButton from "./SidebarButton";
 import { usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { RsetCaptureActive, selectCaptureActive } from "@/slices/captureSlices";
+import { useAuth } from "@/context/AuthContext";
 
 const sideBarHeader = (pathname) => {
   if (pathname === "/textSearch") {
@@ -21,6 +22,8 @@ const sideBarHeader = (pathname) => {
 };
 
 const SidebarDesktop = (props) => {
+  const auth = useAuth();
+
   const dispatch = useDispatch();
   const [isExpanded, setIsExpanded] = useState(false);
   const pathname = usePathname();
@@ -134,10 +137,7 @@ const SidebarDesktop = (props) => {
                   <Button
                     size="sm"
                     className="w-full bg-red-500 hover:bg-red-400"
-                    onClick={() => {
-                      localStorage.removeItem("token");
-                      navigate("/Login");
-                    }}
+                    onClick={auth.signout}
                   >
                     <span>
                       <LogOut />

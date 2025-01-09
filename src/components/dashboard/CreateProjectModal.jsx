@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { api } from "@/api";
 
 const CreateProjectModal = ({ onClose, onCreate }) => {
   const [projectName, setProjectName] = useState("");
@@ -16,18 +17,12 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:8000/project", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: projectName }),
-      });
+      const { ok, data } = await api.project.create({ name: projectName });
 
-      if (!response.ok) {
+      if (!ok) {
         const errorResponse = await response.json();
         throw new Error(errorResponse.message || "خطا در ایجاد پروژه");
       }
-
-      const data = await response.json();
 
       onCreate(data.responseObject);
 

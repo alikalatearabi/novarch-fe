@@ -1,9 +1,12 @@
+'use client';
+
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/dashboard/sidebar/Sidebar";
 import DashboardHeader from "./DashboardHeader";
 import CaptureRoot from "../capture/CaptureRoot";
 import CreateProjectModal from "./CreateProjectModal";
 import { useProject } from "../../context/projectContext";
+import { api } from "@/api";
 
 const DashboardRoot = ({ children }) => {
   const { projectName, setProjectName, projectId, setProjectId } = useProject();
@@ -12,16 +15,11 @@ const DashboardRoot = ({ children }) => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch("http://localhost:8000/project/all", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-        });
+        const { ok, data } = await api.project.getAll();
 
-        if (!response.ok) {
+        if (!ok) {
           throw new Error("Failed to fetch projects");
         }
-
-        const data = await response.json();
 
         if (data.success && data.responseObject.length > 0) {
           const firstProject = data.responseObject[0];

@@ -1,8 +1,9 @@
+'use client';
+
 import { User } from "lucide-react";
 import React from "react";
 import Image from "next/image";
 import Logo from "../../../public/images/logo.png";
-import { useRouter } from "next/navigation"; 
 
 import {
   DropdownMenu,
@@ -12,13 +13,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/context/AuthContext";
 
 const DashboardHeader = ({ projectName }) => {
-  const router = useRouter();
-
-  const handleLogout = () => {
-    router.push("/login"); // Navigate to login page
-  };
+  const auth = useAuth();
 
   return (
     <div id="headerContainer" className="h-[10vh] w-[100vw] flex shadow-sm">
@@ -47,7 +45,7 @@ const DashboardHeader = ({ projectName }) => {
           <DropdownMenuContent>
             <DropdownMenuLabel>پروفایل</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>خروج</DropdownMenuItem>
+            <DropdownMenuItem className='cursor-pointer' onClick={auth.signout}>خروج</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
