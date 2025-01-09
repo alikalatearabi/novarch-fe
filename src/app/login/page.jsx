@@ -53,13 +53,15 @@ const LoginPage = () => {
     >
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-lg shadow-md w-96"
+        className="bg-white p-6 shadow-lg w-96"
+        style={{borderRadius: '20px'}}
       >
         <div className="flex justify-center mb-6">
           <img
             src="/images/logo.jpg"
             alt="Logo"
-            className="w-45 h-32"
+            className="w-45 h-32 rounded-lg"
+            style={{borderRadius: '20px'}}
           />
         </div>
         {error && <div className="text-red-500 text-center mb-4">{error}</div>}
