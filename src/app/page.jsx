@@ -8,14 +8,14 @@ import { api } from "@/api";
 import { useProject } from "@/context/projectContext";
 
 const Page = () => {
-  const { projectName, projectId } = useProject(); 
+  const { projectName, projectId, setProjectId } = useProject(); // Access setProjectId to reset it
   const [sheets, setSheets] = useState([]);
   const [showAddSheetModal, setShowAddSheetModal] = useState(false);
 
   // Fetch sheets for the active project
   useEffect(() => {
     const fetchSheets = async () => {
-      if (!projectId) return; 
+      if (!projectId) return;
       try {
         const response = await api.sheets.get(projectId);
 
@@ -26,7 +26,7 @@ const Page = () => {
         const { data } = response;
         if (data.success) {
           const formattedSheets = data.responseObject.map((sheet) => ({
-            title: `شیت ${sheet.id}`, 
+            title: `شیت ${sheet.id}`,
             date: new Date().toLocaleDateString("fa-IR"),
             image: `http://87.248.156.130:9000/${sheet.imagePath}`,
           }));
@@ -42,9 +42,9 @@ const Page = () => {
 
   const handleAddSheet = (newSheet) => {
     const sheetData = {
-      title: `شیت جدید`, 
+      title: `شیت جدید`,
       date: new Date().toLocaleDateString("fa-IR"),
-      image: URL.createObjectURL(newSheet.file), 
+      image: URL.createObjectURL(newSheet.file),
     };
     setSheets((prevSheets) => [...prevSheets, sheetData]);
   };
@@ -52,18 +52,27 @@ const Page = () => {
   return (
     <div className="relative">
       <div id="homeContainer" className="px-10 h-[100%]">
-        <header id="projectTitle" className="mt-10 flex justify-between bg-white pb-5">
+        <header id="projectTitle" className="mt-10 flex justify-between items-center bg-white pb-5">
           <div id="projectName&Address" className="flex flex-col gap-3">
             <span className="text-[25px]">{projectName || "هیچ پروژه‌ای وجود ندارد"}</span>
           </div>
-          {projectId && (
+          <div className="flex items-center gap-4">
+            {/* Back Button */}
             <Button
-              onClick={() => setShowAddSheetModal(true)}
-              className="bg-blue-500 text-white hover:bg-blue-600"
+              onClick={() => setProjectId(null)} // Reset projectId to return to the dashboard view
+              className="bg-gray-500 text-white hover:bg-gray-600"
             >
-              افزودن شیت
+              بازگشت
             </Button>
-          )}
+            {projectId && (
+              <Button
+                onClick={() => setShowAddSheetModal(true)}
+                className="bg-blue-500 text-white hover:bg-blue-600"
+              >
+                افزودن شیت
+              </Button>
+            )}
+          </div>
         </header>
 
         <div id="overFlow" className="overflow-y-auto h-[90vh]">
