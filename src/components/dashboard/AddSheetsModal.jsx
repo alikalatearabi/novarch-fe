@@ -13,25 +13,24 @@ const AddSheetsModal = ({ onClose, onAddSheet, projectId }) => {
       setError("عنوان و فایل شیت نمی‌توانند خالی باشند");
       return;
     }
-
+  
     setLoading(true);
     setError("");
-
+  
     try {
       const formData = new FormData();
-      formData.append("image", sheetFile);
-      // formData.append("title", sheetTitle);
-      formData.append("projectId", projectId);
-
-      const { ok, data } = await api.sheets.post(formData)
-
+      formData.append("image", sheetFile); // Append the image file
+      formData.append("projectId", projectId); // Append the project ID
+      formData.append("sheetName", sheetTitle); // Append the sheet title (name)
+  
+      const { ok, data } = await api.sheets.post(formData); // Send the request
+  
       if (!ok) {
-        const errorResponse = await response.json();
-        throw new Error(errorResponse.message || "خطا در آپلود شیت");
+        throw new Error(data.message || "خطا در آپلود شیت");
       }
-
-      onAddSheet({ title: sheetTitle, file: sheetFile }); 
-      onClose();
+  
+      onAddSheet({ title: sheetTitle, file: sheetFile }); // Update the UI
+      onClose(); // Close the modal
     } catch (err) {
       setError(err.message);
     } finally {

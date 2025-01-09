@@ -26,10 +26,13 @@ const Page = () => {
         const { data } = response;
         if (data.success) {
           const formattedSheets = data.responseObject.map((sheet) => ({
-            title: `شیت ${sheet.id}`,
+            id: sheet.id,
+            title: sheet.name,
             date: new Date().toLocaleDateString("fa-IR"),
             image: `http://87.248.156.130:9000/${sheet.imagePath}`,
+            createdAt: sheet.createdAt
           }));
+          console.log(formattedSheets)
           setSheets(formattedSheets);
         }
       } catch (error) {
@@ -82,7 +85,7 @@ const Page = () => {
                 <span className="text-[20px]">نقشه‌های فعال</span>
               </header>
               <div id="plans" className="mt-5 mr-10 cursor-pointer overflow-auto p-5">
-                <HomeSheetCard sheets={sheets} />
+                <HomeSheetCard sheets={sheets} setSheets={setSheets} />
               </div>
             </div>
           ) : (
