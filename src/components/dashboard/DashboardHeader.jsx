@@ -22,12 +22,12 @@ const DashboardHeader = ({ projectName }) => {
     <div id="headerContainer" className="h-[10vh] w-[100vw] flex shadow-sm">
       <div id="logo&routes" className="px-5 flex justify-start items-center gap-10 flex-1">
         <div id="logo">
-          <Image src={Logo} width={50} height={96} alt="header" />
+          <Image src={Logo} width={150} height={80} alt="header" style={{borderRadius: '10px'}} />
         </div>
         <div id="detail">
           <span id="captureName"></span>
-          <span id="route" className="text-gray-600 text-[15px] mr-10">
-            {projectName}
+          <span id="route" className="text-[20px]">
+            پروژه نوارک
           </span>
         </div>
       </div>

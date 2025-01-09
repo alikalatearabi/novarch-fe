@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }) => {
 
     const signout = () => {
         window.localStorage.clear();
-        window.location.href = '/';
+        window.location.href = '/login';
     };
 
     return (

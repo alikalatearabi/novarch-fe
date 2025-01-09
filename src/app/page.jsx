@@ -8,14 +8,14 @@ import { api } from "@/api";
 import { useProject } from "@/context/projectContext";
 
 const Page = () => {
-  const { projectName, projectId } = useProject(); // Access active project details
+  const { projectName, projectId } = useProject(); 
   const [sheets, setSheets] = useState([]);
   const [showAddSheetModal, setShowAddSheetModal] = useState(false);
 
   // Fetch sheets for the active project
   useEffect(() => {
     const fetchSheets = async () => {
-      if (!projectId) return; // Skip if no project is selected
+      if (!projectId) return; 
       try {
         const response = await api.sheets.get(projectId);
 
@@ -25,10 +25,9 @@ const Page = () => {
 
         const { data } = response;
         if (data.success) {
-          // Update sheets state with the fetched data
           const formattedSheets = data.responseObject.map((sheet) => ({
-            title: `شیت ${sheet.id}`, // Example title
-            date: new Date().toLocaleDateString("fa-IR"), // Placeholder date
+            title: `شیت ${sheet.id}`, 
+            date: new Date().toLocaleDateString("fa-IR"),
             image: `http://87.248.156.130:9000/${sheet.imagePath}`,
           }));
           setSheets(formattedSheets);
@@ -43,9 +42,9 @@ const Page = () => {
 
   const handleAddSheet = (newSheet) => {
     const sheetData = {
-      title: `شیت جدید`, // Placeholder title
+      title: `شیت جدید`, 
       date: new Date().toLocaleDateString("fa-IR"),
-      image: URL.createObjectURL(newSheet.file), // Temporary image preview
+      image: URL.createObjectURL(newSheet.file), 
     };
     setSheets((prevSheets) => [...prevSheets, sheetData]);
   };
