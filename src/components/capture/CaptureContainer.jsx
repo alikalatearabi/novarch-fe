@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Logo from "../../../public/images/logo.png";
+import Logo from "../../../public/images/logo.jpg";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
