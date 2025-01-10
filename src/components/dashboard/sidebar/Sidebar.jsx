@@ -5,7 +5,6 @@ import SideBarMobile from "@/components/dashboard/sidebar/SidebarMobile";
 import { sidebarItems } from "@/apiServices/data";
 
 const SideBar = () => {
-  //   const isDesktop = useMediaQuery("(min-width: 1034px)");
   const isDesktop = true;
 
   return (
