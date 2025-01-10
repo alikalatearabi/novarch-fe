@@ -30,7 +30,8 @@ const Page = () => {
             title: sheet.name,
             date: new Date().toLocaleDateString("fa-IR"),
             image: `http://87.248.156.130:9000/${sheet.imagePath}`,
-            createdAt: sheet.createdAt
+            createdAt: sheet.createdAt,
+            hasVideo: sheet.hasVideo
           }));
           console.log(formattedSheets)
           setSheets(formattedSheets);

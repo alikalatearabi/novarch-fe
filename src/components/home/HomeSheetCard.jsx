@@ -32,8 +32,13 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
     }
   };
 
-  const handleViewVirtualTour = (sheetId) => {
+  const handleViewVirtualTour = (e, sheetId) => {
+    e.stopPropagation(); // Prevent card click event
     router.push(`/images?sheetId=${sheetId}`);
+  };
+
+  const handleUploadClick = (sheet) => {
+    setSelectedSheet(sheet);
   };
 
   return (
@@ -42,13 +47,14 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
         {sheets.map((sheet, index) => (
           <div
             key={index}
-            className="flex gap-5 hover:shadow-md w-[400px] items-center p-4 rounded-lg border border-gray-200 bg-white transition-shadow"
+            className="flex gap-5 hover:shadow-md w-[400px] items-center p-4 rounded-lg border border-gray-200 bg-white transition-shadow cursor-pointer"
+            onClick={() => handleUploadClick(sheet)}
           >
             <div id="plansImage">
               <Image
                 src={sheet.image}
-                width={150}
-                height={50}
+                width={100}
+                height={20}
                 alt={sheet.title}
                 className="rounded-md"
               />
@@ -61,16 +67,22 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleDelete(sheet.id);
+                  console.log(sheet)
+                  // handleDelete(sheet.id);
                 }}
-                className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-600 text-sm font-medium rounded-md shadow-sm hover:bg-red-200 hover:shadow-md"
+                className="flex justify-center items-center gap-2 px-4 py-2 bg-red-100 text-red-600 text-sm font-medium rounded-md shadow-sm hover:bg-red-200 hover:shadow-md"
               >
                 <FiTrash2 className="w-5 h-5" />
                 حذف
               </button>
               <button
-                onClick={() => handleViewVirtualTour(sheet.id)}
-                className="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md shadow-sm hover:bg-blue-600 hover:shadow-md"
+                onClick={(e) => handleViewVirtualTour(e, sheet.id)}
+                disabled={!sheet.hasVideo}
+                className={`px-4 py-2 text-white text-sm font-small rounded-md shadow-sm ${
+                  sheet.hasVideo
+                    ? "bg-blue-500 hover:bg-blue-600"
+                    : "bg-gray-300 cursor-not-allowed"
+                }`}
               >
                 مشاهده تور مجازی
               </button>
@@ -79,7 +91,9 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
         ))}
       </div>
 
-      {selectedSheet && <UploadVideoModal sheet={selectedSheet} onClose={() => setSelectedSheet(null)} />}
+      {selectedSheet && (
+        <UploadVideoModal sheet={selectedSheet} onClose={() => setSelectedSheet(null)} />
+      )}
     </>
   );
 };
