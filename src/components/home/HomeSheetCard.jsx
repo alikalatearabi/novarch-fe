@@ -37,6 +37,14 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
     router.push(`/images?sheetId=${sheetId}`);
   };
 
+  const handleVideoUpload = (sheetId) => {
+    setSheets((prevSheets) =>
+      prevSheets.map((sheet) =>
+        sheet.id === sheetId ? { ...sheet, hasVideo: true } : sheet
+      )
+    );
+  };
+
   const handleUploadClick = (sheet) => {
     setSelectedSheet(sheet);
   };
@@ -67,8 +75,7 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  console.log(sheet)
-                  // handleDelete(sheet.id);
+                  handleDelete(sheet.id);
                 }}
                 className="flex justify-center items-center gap-2 px-4 py-2 bg-red-100 text-red-600 text-sm font-medium rounded-md shadow-sm hover:bg-red-200 hover:shadow-md"
               >
@@ -92,10 +99,15 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
       </div>
 
       {selectedSheet && (
-        <UploadVideoModal sheet={selectedSheet} onClose={() => setSelectedSheet(null)} />
+        <UploadVideoModal
+          sheet={selectedSheet}
+          onClose={() => setSelectedSheet(null)}
+          onVideoUpload={handleVideoUpload} // Pass the handler here
+        />
       )}
     </>
   );
 };
 
 export default HomeSheetCard;
+

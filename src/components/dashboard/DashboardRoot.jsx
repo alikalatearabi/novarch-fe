@@ -112,14 +112,17 @@ const DashboardRoot = ({ children }) => {
         />
       )}
 
-      <div className="fixed bottom-10 right-20">
-        <button
-          onClick={() => setShowCreateProjectModal(true)}
-          className="create-project-button"
-        >
-          ایجاد پروژه
-        </button>
-      </div>
+      {/* Conditionally render the "ایجاد پروژه" button */}
+      {!projectId && (
+        <div className="fixed bottom-10 right-20">
+          <button
+            onClick={() => setShowCreateProjectModal(true)}
+            className="create-project-button"
+          >
+            ایجاد پروژه
+          </button>
+        </div>
+      )}
     </div>
   );
 };

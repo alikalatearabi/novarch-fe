@@ -34,16 +34,21 @@ export function setToken(token: IToken) {
     localStorage.setItem('token', JSON.stringify(token));
 }
 
-const refreshAccessToken = () =>
-    Axios.get(new URL('/api/auth/refresh', baseURL).href, {
-        headers: { Authorization: `Bearer ${token().refreshToken}` },
-    })
-        .then((res) => res.status === 200 && res.data && res.data.data)
-        .catch((e) => {
-            if (window !== undefined) {
-                window.location.href = '/login'
-            }
+const refreshAccessToken = async () => {
+    try {
+        const response = await Axios.get(new URL('/api/auth/refresh', baseURL).href, {
+            headers: { Authorization: `Bearer ${token().refreshToken}` },
         });
+        if (response.status === 200 && response.data && response.data.data) {
+            return response.data.data;
+        }
+    } catch (error) {
+        console.error('Failed to refresh access token:', error);
+        localStorage.clear();
+        throw new Error('Session expired. Please log in again.');
+    }
+};
+
 
 axios.interceptors.response.use(
     (response) => {
@@ -55,21 +60,27 @@ axios.interceptors.response.use(
     },
     async function (error) {
         const originalRequest = error.config;
-        if (error.response && error.response.status === 401 && !originalRequest._retry && originalRequest.url !== 'auth/login') {
+
+        if (error.response && error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
-            const { accessToken, refreshToken } = await refreshAccessToken();
-            setToken({ accessToken, refreshToken });
-            if (accessToken) {
-                originalRequest.headers['Authorization'] = 'Bearer ' + accessToken;
-                return axios(originalRequest);
-            } else {
+            try {
+                const { accessToken, refreshToken } = await refreshAccessToken();
+                setToken({ accessToken, refreshToken });
+                if (accessToken) {
+                    originalRequest.headers['Authorization'] = 'Bearer ' + accessToken;
+                    return axios(originalRequest);
+                }
+            } catch (refreshError) {
                 localStorage.clear();
-                return Promise.reject('Invalid refresh token');
+                // Notify the user instead of refreshing or redirecting
+                console.error('Session expired. Please log in again.');
             }
         }
+
         return Promise.reject(error);
     },
 );
+
 
 axios.interceptors.request.use(async function (request) {
     try {
@@ -77,7 +88,7 @@ axios.interceptors.request.use(async function (request) {
         if (accessToken) {
             request.headers['Authorization'] = `Bearer ${accessToken}`;
         }
-    } catch (error) {}
+    } catch (error) { }
     return request;
 });
 
@@ -98,12 +109,12 @@ export const api = {
     },
     sheets: {
         get: (projectId: number) => {
-            return axios.get<any, ExtendedAxiosResponse<GeneralResponse<any>>>('/api/sheets', { params: { projectId}});
+            return axios.get<any, ExtendedAxiosResponse<GeneralResponse<any>>>('/api/sheets', { params: { projectId } });
         },
         post: (data: any) => {
             return axios.post<any, ExtendedAxiosResponse<GeneralResponse<any>>>('/api/sheets', data, {
                 headers: {
-                    'Content-Type' : 'multipart/form-data',
+                    'Content-Type': 'multipart/form-data',
                 }
             });
         }

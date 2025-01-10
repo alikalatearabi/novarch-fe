@@ -34,10 +34,10 @@ const DashboardHeader = ({ projectName }) => {
       <div id="userProfile" className="flex-1 flex justify-end items-center gap-5 px-10 cursor-pointer">
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center gap-5">
-            <div id="userDetail" className="flex flex-col">
+            {/* <div id="userDetail" className="flex flex-col">
               <span>ali kalate</span>
               <span className="text-[12px] mt-1 text-gray-700">ali.kalate89@hotmail.com</span>
-            </div>
+            </div> */}
             <div id="userAvatar" className="bg-gray-300 p-4 rounded-full">
               <User color="white" />
             </div>

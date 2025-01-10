@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
 
-const UploadVideoModal = ({ sheet, onClose }) => {
+const UploadVideoModal = ({ sheet, onClose, onVideoUpload }) => {
   const [videoFile, setVideoFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false); // Track upload status
 
@@ -21,29 +22,35 @@ const UploadVideoModal = ({ sheet, onClose }) => {
     setIsUploading(true); // Set uploading state
 
     try {
-      const response = await fetch("http://localhost:8000/api/upload/upload-video", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/api/upload/upload-video",
+        formData,
+        {
+          timeout: 600000, // Set timeout to 10 seconds
+          headers: {
+            "Content-Type": "multipart/form-data", // Ensure proper headers
+          },
+        }
+      );
 
-      if (!response.ok) {
-        throw new Error("Failed to upload video");
-      }
-
-      const result = await response.json();
-
-      if (result.success) {
-        console.log(result.success)
+      if (response.data.success) {
         alert(
-          `ویدئو با موفقیت بارگذاری شد! تعداد فریم‌ها: ${result.responseObject.frameCount}`
+          `ویدئو با موفقیت بارگذاری شد! تعداد فریم‌ها: ${response.data.responseObject.frameCount}`
         );
+        onVideoUpload(sheet.id); // Notify parent about the successful upload
         onClose(); // Close the modal
       } else {
         alert("بارگذاری ویدئو ناموفق بود");
       }
     } catch (error) {
-      console.error("Error uploading video:", error);
-      alert("بارگذاری ویدئو با مشکل مواجه شد");
+      if (axios.isCancel(error)) {
+        console.error("Request canceled:", error.message);
+      } else if (error.code === "ECONNABORTED") {
+        alert("بارگذاری ویدئو به دلیل تایم اوت متوقف شد");
+      } else {
+        console.error("Error uploading video:", error);
+        alert("بارگذاری ویدئو با مشکل مواجه شد");
+      }
     } finally {
       setIsUploading(false); // Reset uploading state
     }
@@ -83,3 +90,4 @@ const UploadVideoModal = ({ sheet, onClose }) => {
 };
 
 export default UploadVideoModal;
+

@@ -1,5 +1,5 @@
 {
-    "local": "http://localhost:80",
+    "local": "http://87.248.156.130:80",
     "kaveh_server_login_local": "http://172.30.20.227:5006",
     "kaveh_server_OT_local": "http://172.30.20.227:5008",
     "kaveh_server_login_online": "http://185.134.96.77:9080",
