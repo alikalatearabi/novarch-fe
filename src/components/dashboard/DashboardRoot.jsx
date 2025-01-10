@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Sidebar from "@/components/dashboard/sidebar/Sidebar";
 import DashboardHeader from "./DashboardHeader";
 import CaptureRoot from "../capture/CaptureRoot";
@@ -14,34 +14,43 @@ const DashboardRoot = ({ children }) => {
   const [projects, setProjects] = useState([]);
   const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const { ok, data } = await api.project.getAll();
+  // Fetch projects function
+  const fetchProjects = useCallback(async () => {
+    try {
+      const { ok, data } = await api.project.getAll();
 
-        if (!ok) {
-          throw new Error("Failed to fetch projects");
-        }
-
-        if (data.success) {
-          setProjects(data.responseObject);
-        }
-      } catch (error) {
-        console.error("Error fetching projects:", error);
+      if (!ok) {
+        throw new Error("Failed to fetch projects");
       }
-    };
 
-    fetchProjects();
+      if (data.success) {
+        setProjects(data.responseObject);
+      }
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
   }, []);
+
+  // Fetch projects initially
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
+
+  // Fetch projects when returning to project list
+  useEffect(() => {
+    if (!projectId) {
+      fetchProjects();
+    }
+  }, [projectId, fetchProjects]);
 
   const handleProjectClick = (project) => {
     setProjectName(project.name);
     setProjectId(project.id);
   };
 
-  const handleProjectCreate = (project) => {
-    setProjectName(project.name);
-    setProjectId(project.id);
+  const handleProjectCreate = () => {
+    fetchProjects(); // Update project list after creation
+    setShowCreateProjectModal(false);
   };
 
   return (
@@ -112,7 +121,6 @@ const DashboardRoot = ({ children }) => {
         />
       )}
 
-      {/* Conditionally render the "ایجاد پروژه" button */}
       {!projectId && (
         <div className="fixed bottom-10 right-20">
           <button
