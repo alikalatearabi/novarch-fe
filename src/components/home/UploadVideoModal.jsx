@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const UploadVideoModal = ({ sheet, onClose }) => {
   const [videoFile, setVideoFile] = useState(null);
+  const [isUploading, setIsUploading] = useState(false); // Track upload status
 
   const handleFileChange = (e) => {
     setVideoFile(e.target.files[0]);
@@ -17,8 +18,10 @@ const UploadVideoModal = ({ sheet, onClose }) => {
     formData.append("video", videoFile);
     formData.append("sheetId", sheet.id);
 
+    setIsUploading(true); // Set uploading state
+
     try {
-      const response = await fetch("/api/uploadVideo", {
+      const response = await fetch("http://localhost:8000/api/upload/upload-video", {
         method: "POST",
         body: formData,
       });
@@ -27,11 +30,22 @@ const UploadVideoModal = ({ sheet, onClose }) => {
         throw new Error("Failed to upload video");
       }
 
-      alert("ویدئو با موفقیت بارگذاری شد");
-      onClose(); // Close the modal
+      const result = await response.json();
+
+      if (result.success) {
+        console.log(result.success)
+        alert(
+          `ویدئو با موفقیت بارگذاری شد! تعداد فریم‌ها: ${result.responseObject.frameCount}`
+        );
+        onClose(); // Close the modal
+      } else {
+        alert("بارگذاری ویدئو ناموفق بود");
+      }
     } catch (error) {
       console.error("Error uploading video:", error);
       alert("بارگذاری ویدئو با مشکل مواجه شد");
+    } finally {
+      setIsUploading(false); // Reset uploading state
     }
   };
 
@@ -48,13 +62,17 @@ const UploadVideoModal = ({ sheet, onClose }) => {
         <div className="flex justify-between">
           <button
             onClick={handleUpload}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            className={`px-4 py-2 rounded-md text-white ${
+              isUploading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+            }`}
+            disabled={isUploading}
           >
-            بارگذاری
+            {isUploading ? "در حال بارگذاری..." : "بارگذاری"}
           </button>
           <button
             onClick={onClose}
             className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600"
+            disabled={isUploading}
           >
             لغو
           </button>

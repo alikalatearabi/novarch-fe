@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { FiTrash2 } from "react-icons/fi";
-import { toJalaali } from "jalaali-js"; // Import the toJalaali function
-import UploadVideoModal from "./UploadVideoModal"; // Modal component for video upload
+import { toJalaali } from "jalaali-js";
+import UploadVideoModal from "./UploadVideoModal";
+import { useRouter } from "next/navigation";
 
 const HomeSheetCard = ({ sheets, setSheets }) => {
-  const [selectedSheet, setSelectedSheet] = useState(null); // Track selected sheet for video upload
+  const [selectedSheet, setSelectedSheet] = useState(null);
+  const router = useRouter();
 
   const formatToJalali = (dateString) => {
     const date = new Date(dateString);
@@ -15,7 +17,6 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
 
   const handleDelete = async (sheetId) => {
     try {
-      // Call the delete API
       const response = await fetch(`http://localhost:8000/api/sheets/${sheetId}`, {
         method: "DELETE",
       });
@@ -24,7 +25,6 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
         throw new Error("Failed to delete the sheet");
       }
 
-      // Update the sheets state to remove the deleted sheet
       setSheets((prevSheets) => prevSheets.filter((sheet) => sheet.id !== sheetId));
     } catch (error) {
       console.error("Error deleting sheet:", error);
@@ -32,12 +32,8 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
     }
   };
 
-  const handleUploadClick = (sheet) => {
-    setSelectedSheet(sheet); // Set the clicked sheet for video upload
-  };
-
-  const handleModalClose = () => {
-    setSelectedSheet(null); // Close the modal
+  const handleViewVirtualTour = (sheetId) => {
+    router.push(`/images?sheetId=${sheetId}`);
   };
 
   return (
@@ -46,8 +42,7 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
         {sheets.map((sheet, index) => (
           <div
             key={index}
-            className="flex gap-5 hover:shadow-md w-[400px] items-center p-4 rounded-lg border border-gray-200 bg-white transition-shadow cursor-pointer"
-            onClick={() => handleUploadClick(sheet)} // Open modal on click
+            className="flex gap-5 hover:shadow-md w-[400px] items-center p-4 rounded-lg border border-gray-200 bg-white transition-shadow"
           >
             <div id="plansImage">
               <Image
@@ -60,32 +55,31 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
             </div>
             <div id="plansDetail" className="flex flex-col gap-2 flex-grow">
               <span className="text-[15px] font-medium">{sheet.title}</span>
-              {/* Display createdAt in Jalali format */}
-              <span className="text-[12px] text-gray-500">
-                {formatToJalali(sheet.createdAt)}
-              </span>
+              <span className="text-[12px] text-gray-500">{formatToJalali(sheet.createdAt)}</span>
             </div>
-            {/* Delete Button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent click event bubbling to the card
-                handleDelete(sheet.id);
-              }}
-              className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-600 text-sm font-medium rounded-md shadow-sm hover:bg-red-200 hover:shadow-md transition-all"
-            >
-              <FiTrash2 className="w-5 h-5" />
-              حذف
-            </button>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete(sheet.id);
+                }}
+                className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-600 text-sm font-medium rounded-md shadow-sm hover:bg-red-200 hover:shadow-md"
+              >
+                <FiTrash2 className="w-5 h-5" />
+                حذف
+              </button>
+              <button
+                onClick={() => handleViewVirtualTour(sheet.id)}
+                className="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md shadow-sm hover:bg-blue-600 hover:shadow-md"
+              >
+                مشاهده تور مجازی
+              </button>
+            </div>
           </div>
         ))}
       </div>
 
-      {selectedSheet && (
-        <UploadVideoModal
-          sheet={selectedSheet}
-          onClose={handleModalClose}
-        />
-      )}
+      {selectedSheet && <UploadVideoModal sheet={selectedSheet} onClose={() => setSelectedSheet(null)} />}
     </>
   );
 };
