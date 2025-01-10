@@ -46,9 +46,12 @@ const Page = () => {
 
   const handleAddSheet = (newSheet) => {
     const sheetData = {
-      title: `شیت جدید`,
+      id: new Date().getTime(), 
+      title: newSheet.title || `شیت جدید`,
       date: new Date().toLocaleDateString("fa-IR"),
       image: URL.createObjectURL(newSheet.file),
+      createdAt: new Date().toISOString(), 
+      hasVideo: false, 
     };
     setSheets((prevSheets) => [...prevSheets, sheetData]);
   };
