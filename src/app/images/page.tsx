@@ -23,7 +23,6 @@ const Page = () => {
       ) : (
         <div className="flex gap-2 transition-all">
           <ImageRoot />
-         
         </div>
       )}
       {imageSplitView && (

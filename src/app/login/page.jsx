@@ -13,15 +13,16 @@ const LoginPage = () => {
   const router = useRouter();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     setError("");
     setLoading(true);
-
+  
     if (!email || !password) {
       setError("Both fields are required.");
       setLoading(false);
       return;
     }
+  
     try {
       const authRes = await auth.signin(email, password);
       if (authRes.status) {
@@ -35,6 +36,7 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     if (auth.isAuthenticated()) {
