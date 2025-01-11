@@ -1,0 +1,111 @@
+/* Container for all sheets */
+.sheets-card-container {
+    display: inline-flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  
+  /* Individual sheet card */
+  .sheet-card {
+    position: relative;
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    padding: 1rem 1rem;
+    width: 400px;
+    border-radius: 1.5rem;
+    background-color: white;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  .sheet-card:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Sheet has video */
+  .sheet-card.has-video {
+    border-color: #3b82f6; /* Blue-500 */
+  }
+  
+  /* Icons container */
+  .sheet-card-icons {
+    position: absolute;
+    left: 0.7rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  /* General icon button styles */
+  .icon-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  /* Delete Icon */
+  .delete-icon {
+    background-color: #fecaca; /* Red-100 */
+    color: #dc2626; /* Red-600 */
+  }
+  
+  .delete-icon:hover {
+    background-color: #fca5a5; /* Red-200 */
+  }
+  
+  /* Upload/Edit Icon */
+  .upload-icon {
+    background-color: #d1d5db; /* Gray-300 */
+    color: #6b7280; /* Gray-500 */
+    cursor: not-allowed;
+  }
+  
+  .upload-icon.upload-mode {
+    cursor: pointer;
+  }
+  
+  .upload-icon.upload-mode:hover {
+    background-color: #e5e7eb; /* Gray-200 */
+  }
+  
+  .upload-icon.edit-mode {
+    background-color: #3b82f6; /* Blue-500 */
+    color: white;
+    cursor: pointer;
+  }
+  
+  .upload-icon.edit-mode:hover {
+    background-color: #2563eb; /* Blue-600 */
+  }
+  
+  /* Image styles */
+  .sheet-image {
+    border-radius: 1rem;
+  }
+  
+  /* Sheet details */
+  .sheet-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-grow: 1;
+  }
+  
+  .sheet-title {
+    font-size: 0.9375rem;
+    font-weight: bold;
+  }
+  
+  .sheet-date {
+    font-size: 0.9rem;
+    color: rgb(115, 115, 115); /* Gray-500 */
+  }
+  

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { FiTrash2 } from "react-icons/fi";
+import { FiTrash2, FiUpload, FiEdit } from "react-icons/fi";
 import { toJalaali } from "jalaali-js";
 import UploadVideoModal from "./UploadVideoModal";
 import { useRouter } from "next/navigation";
+import "./HomeSheetCard.css"; // Import the CSS file
 
 const HomeSheetCard = ({ sheets, setSheets }) => {
   const [selectedSheet, setSelectedSheet] = useState(null);
@@ -32,11 +33,6 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
     }
   };
 
-  const handleViewVirtualTour = (e, sheetId) => {
-    e.stopPropagation(); 
-    router.push(`/images?sheetId=${sheetId}`);
-  };
-
   const handleVideoUpload = (sheetId) => {
     setSheets((prevSheets) =>
       prevSheets.map((sheet) =>
@@ -49,50 +45,64 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
     setSelectedSheet(sheet);
   };
 
+  const convertToPersianDigits = (input) => {
+    const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+    return input.replace(/\d/g, (digit) => persianDigits[digit]);
+  };
+
   return (
     <>
-      <div id="sheetsCardContainer" className="inline-flex gap-5 flex-wrap">
+      <div id="sheetsCardContainer" className="sheets-card-container">
         {sheets.map((sheet, index) => (
           <div
             key={index}
-            className="flex gap-5 hover:shadow-md w-[400px] items-center p-4 rounded-lg border border-gray-200 bg-white transition-shadow cursor-pointer"
-            onClick={() => handleUploadClick(sheet)}
+            className={`sheet-card ${sheet.hasVideo ? "has-video" : ""}`}
+            onClick={() => {
+              if (sheet.hasVideo) {
+                router.push(`/images?sheetId=${sheet.id}`);
+              }
+            }}
           >
-            <div id="plansImage">
-              <Image
-                src={sheet.image}
-                width={100}
-                height={20}
-                alt={sheet.title}
-                className="rounded-md"
-              />
-            </div>
-            <div id="plansDetail" className="flex flex-col gap-2 flex-grow">
-              <span className="text-[15px] font-medium">{sheet.title}</span>
-              <span className="text-[12px] text-gray-500">{formatToJalali(sheet.createdAt)}</span>
-            </div>
-            <div className="flex flex-col gap-2">
+            {/* Icons on the left side */}
+            <div className="sheet-card-icons">
+              {/* Delete Icon */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDelete(sheet.id);
                 }}
-                className="flex justify-center items-center gap-2 px-4 py-2 bg-red-100 text-red-600 text-sm font-medium rounded-md shadow-sm hover:bg-red-200 hover:shadow-md"
+                className="icon-button delete-icon"
               >
-                <FiTrash2 className="w-5 h-5" />
-                حذف
+                <FiTrash2 />
               </button>
+
+              {/* Upload/Edit Button */}
               <button
-                onClick={(e) => handleViewVirtualTour(e, sheet.id)}
-                disabled={!sheet.hasVideo}
-                className={`px-4 py-2 text-white text-sm font-small rounded-md shadow-sm ${
-                  sheet.hasVideo
-                    ? "bg-blue-500 hover:bg-blue-600"
-                    : "bg-gray-300 cursor-not-allowed"
-                }`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedSheet(sheet);
+                }}
+                className={`icon-button upload-icon ${sheet.hasVideo ? "edit-mode" : "upload-mode"}`}
               >
-                مشاهده تور مجازی
+                {sheet.hasVideo ? <FiEdit /> : <FiUpload />}
               </button>
+            </div>
+
+            {/* Main card content */}
+            <div id="plansImage">
+              <Image
+                src={sheet.image}
+                width={140}
+                height={30}
+                alt={sheet.title}
+                className="sheet-image"
+              />
+            </div>
+            <div id="plansDetail" className="sheet-details">
+              <span className="sheet-title">{sheet.title}</span>
+              <span className="sheet-date">
+                {convertToPersianDigits(formatToJalali(sheet.createdAt))}
+              </span>
             </div>
           </div>
         ))}
@@ -102,7 +112,7 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
         <UploadVideoModal
           sheet={selectedSheet}
           onClose={() => setSelectedSheet(null)}
-          onVideoUpload={handleVideoUpload} 
+          onVideoUpload={handleVideoUpload}
         />
       )}
     </>
@@ -110,4 +120,3 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
 };
 
 export default HomeSheetCard;
-

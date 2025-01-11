@@ -81,7 +81,7 @@ const Page = () => {
       <div id="homeContainer" className="px-10 h-[100%]">
         <header id="projectTitle" className="mt-10 flex justify-between items-center bg-white pb-5">
           <div id="projectName&Address" className="flex flex-col gap-3">
-            <span className="text-[25px]">{projectName || "هیچ پروژه‌ای وجود ندارد"}</span>
+            <span className="text-[25px]" style={{fontWeight: 'bold'}}>{projectName || "هیچ پروژه‌ای وجود ندارد"}</span>
           </div>
           <div className="flex items-center gap-4">
             <Button
@@ -104,11 +104,11 @@ const Page = () => {
         <div id="overFlow" className="overflow-y-auto h-[75vh]">
           {sheets.length > 0 ? (
             <>
-              <div id="plansSection" className="mt-10 px-10 z-10 bg-white">
+              <div id="plansSection" className="mt-10 bg-white">
                 <header className="flex justify-between">
-                  <span className="text-[20px]">نقشه‌های فعال</span>
+                  <span className="text-[17px]" style={{fontWeight: 'bold'}}>نقشه‌های فعال</span>
                 </header>
-                <div id="plans" className="mt-5 mr-10 cursor-pointer overflow-auto p-5">
+                <div id="plans" className="mt-5 cursor-pointer overflow-auto p-1">
                   <HomeSheetCard sheets={sheets} setSheets={setSheets} />
                 </div>
               </div>
