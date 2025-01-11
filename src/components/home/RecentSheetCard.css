@@ -64,7 +64,7 @@
 
 .user-name {
     font-size: 14px;
-    color: #4b5563;
+    color: black;
 }
 
 .sheet-date {
@@ -135,11 +135,6 @@
 .user-avatar svg {
     font-size: 18px;
     /* Adjust icon size */
-}
-
-.user-name {
-    font-size: 14px;
-    color: #4b5563;
 }
 
 /* Date styling */
