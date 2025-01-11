@@ -6,6 +6,7 @@ import HomeSheetCard from "@/components/home/HomeSheetCard";
 import AddSheetsModal from "@/components/dashboard/AddSheetsModal";
 import { api } from "@/api";
 import { useProject } from "@/context/projectContext";
+import RecentSheetCard from "@/components/home/RecentSheetCard";
 
 import './page.css'
 
@@ -115,12 +116,12 @@ const Page = () => {
                 </div>
               </div>
 
-              <div id="recentPlansSection" className="mt-10 px-10 z-10 bg-white">
+              <div id="recentPlansSection" className="mt-10 bg-white">
                 <header className="flex justify-between">
-                  <span className="text-[20px]">نقشه‌های اخیر</span>
+                  <span className="text-[17px]" style={{ fontWeight: 'bold' }}>نقشه‌های اخیر</span>
                 </header>
                 <div id="recentPlans" className="plans-container">
-                  <HomeSheetCard sheets={recentSheets} setSheets={setSheets} />
+                  <RecentSheetCard sheets={recentSheets} setSheets={setSheets} />
                 </div>
               </div>
 
