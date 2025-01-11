@@ -17,7 +17,7 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
 
   const handleDelete = async (sheetId) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/sheets/${sheetId}`, {
+      const response = await fetch(`http://87.248.156.130:8000/api/sheets/${sheetId}`, {
         method: "DELETE",
       });
 
