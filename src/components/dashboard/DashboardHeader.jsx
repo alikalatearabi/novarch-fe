@@ -19,7 +19,7 @@ const DashboardHeader = ({ projectName }) => {
   const auth = useAuth();
 
   return (
-    <div id="headerContainer" className="h-[10vh] w-[100vw] flex" style={{borderBottom: '1px solid #D8D8D8'}}>
+    <div id="headerContainer" className="h-[8vh] w-[100vw] flex" style={{borderBottom: '1px solid #D8D8D8'}}>
       <div id="logo&routes" className="px-5 flex justify-start items-center gap-10 flex-1">
         <div id="logo">
           <Image src={Logo} width={150} height={80} alt="header" style={{borderRadius: '10px'}} />
@@ -38,7 +38,7 @@ const DashboardHeader = ({ projectName }) => {
               <span>ali kalate</span>
               <span className="text-[12px] mt-1 text-gray-700">ali.kalate89@hotmail.com</span>
             </div> */}
-            <div id="userAvatar" className="bg-gray-300 p-4 rounded-full">
+            <div id="userAvatar" className="bg-gray-300 p-2 rounded-full">
               <User color="white" />
             </div>
           </DropdownMenuTrigger>

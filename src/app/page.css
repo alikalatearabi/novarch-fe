@@ -1,21 +1,50 @@
 .plans-container {
-    display: flex;
-    gap: 1rem; /* Space between cards */
-    overflow-x: auto; /* Enables horizontal scrolling */
-    padding: 1rem;
-    white-space: nowrap; /* Prevents wrapping of child elements */
-  }
-  
-  .plans-container::-webkit-scrollbar {
-    height: 8px; /* Horizontal scrollbar height */
-  }
-  
-  .plans-container::-webkit-scrollbar-thumb {
-    background-color: #d1d5db; /* Gray scrollbar */
-    border-radius: 4px;
-  }
-  
-  .plans-container::-webkit-scrollbar-track {
-    background-color: #f9fafb; /* Light background for scrollbar track */
-  }
-  
+  display: flex;
+  gap: 1rem;
+  /* Space between cards */
+  overflow-x: auto;
+  /* Enables horizontal scrolling */
+  padding: 1rem;
+  white-space: nowrap;
+  /* Prevents wrapping of child elements */
+}
+
+.plans-container::-webkit-scrollbar {
+  height: 8px;
+  /* Horizontal scrollbar height */
+}
+
+.plans-container::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  /* Gray scrollbar */
+  border-radius: 4px;
+}
+
+.plans-container::-webkit-scrollbar-track {
+  background-color: #f9fafb;
+  /* Light background for scrollbar track */
+}
+
+/* Notes section container */
+#notesSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  text-align: center;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+/* No notes message */
+.no-notes {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.no-notes p {
+  margin: 0;
+}

@@ -126,53 +126,14 @@ const Page = () => {
               </div>
 
               {/* Notes Section */}
-              <div
-                id="notesSection"
-                className="mt-10 px-10 z-10 bg-gray-100 p-5 rounded-lg shadow-md"
-              >
-                <header className="flex justify-between items-center">
-                  <span className="text-[20px] flex items-center gap-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 text-blue-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    یادداشت‌ها
-                  </span>
-                  <Button className="bg-blue-500 text-white hover:bg-blue-600">افزودن یادداشت</Button>
+              <div id="notesSection" className="mt-10 px-10 z-10 bg-gray-100 p-5 rounded-lg shadow-md">
+                <header className="flex items-center gap-2">
+                  <span className="text-[20px]">یادداشت‌ها</span>
                 </header>
-                <div className="mt-5 space-y-4">
-                  <div className="bg-white p-4 rounded-lg shadow-sm flex items-start gap-4">
-                    <div className="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center">
-                      📝
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-gray-800">یادداشت ۱</h4>
-                      <p className="text-sm text-gray-600">
-                        این یادداشت برای شیت شماره ۱ است.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm flex items-start gap-4">
-                    <div className="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center">
-                      📌
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-gray-800">یادداشت ۲</h4>
-                      <p className="text-sm text-gray-600">
-                        این یادداشت برای شیت شماره ۲ است.
-                      </p>
-                    </div>
-                  </div>
+
+                {/* Show this when there are no notes */}
+                <div className="no-notes">
+                  <p>هیچ یادداشتی وجود ندارد</p>
                 </div>
               </div>
             </>
