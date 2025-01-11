@@ -8,6 +8,7 @@ import CreateProjectModal from "./CreateProjectModal";
 import { useProject } from "../../context/projectContext";
 import { api } from "@/api";
 import "./dashbaordStyle.css";
+import { FaFolder } from "react-icons/fa";
 
 const DashboardRoot = ({ children }) => {
   const { projectName, setProjectName, projectId, setProjectId } = useProject();
@@ -89,22 +90,31 @@ const DashboardRoot = ({ children }) => {
                 className="project-card"
                 onClick={() => handleProjectClick(project)}
               >
-                <div className="project-header">
-                  <div className="project-icon">📂</div>
-                  <span className="project-status">
-                    {project.status || "Active"}
-                  </span>
+                {/* Card Header */}
+                <div className="project-card-header">
+                  <div className="project-icon">
+                    <FaFolder />
+                  </div>
+                  <h3 className="project-name">{project.name}</h3>
                 </div>
-                <h3 className="project-name">{project.name}</h3>
-                <p className="project-description">
-                  {project.description || "بدون توضیحات"}
-                </p>
-                <div className="project-actions">
+
+                {/* Status Badge */}
+                <div className="project-status">
+                  {project.status || "فعال"}
+                </div>
+
+                {/* Description */}
+                {/* <p className="project-description">
+                {project.description || "بدون توضیحات"}
+              </p> */}
+
+                {/* Card Footer */}
+                <div className="project-card-footer">
                   <button
                     className="delete-button"
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent triggering the project card click
-                      handleDeleteProject(project.id); // Call the delete handler
+                      e.stopPropagation();
+                      handleDeleteProject(project.id);
                     }}
                   >
                     <svg
@@ -143,7 +153,7 @@ const DashboardRoot = ({ children }) => {
       )}
 
       {!projectId && (
-        <div className="fixed bottom-10 right-20">
+        <div className="fixed bottom-5" style={{ right: '280px' }}>
           <button
             onClick={() => setShowCreateProjectModal(true)}
             className="create-project-button"

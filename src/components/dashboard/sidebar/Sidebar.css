@@ -1,0 +1,22 @@
+/* Sidebar */
+.sidebar-expanded {
+  width: 250px; /* Fixed expanded width */
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0; /* Align on the right side */
+  background-color: #ffffff;
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+/* Main Content Adjustment */
+#root-container {
+  margin-right: 250px; /* Match the sidebar width */
+  min-height: 100vh;
+  position: relative;
+  padding: 1rem;
+}

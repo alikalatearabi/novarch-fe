@@ -6,7 +6,7 @@
   }
   
   .projects-container {
-    padding: 25px 90px 25px 25px;
+    padding: 25px 280px 25px 25px;
   }
   
   .projects-title {
@@ -40,63 +40,73 @@
   }
   
   .project-card {
-    padding: 1.25rem;
-    background: linear-gradient(to right, #f7fafc, #ffffff);
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transform: scale(1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
   }
   
   .project-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
   
-  .project-header {
+  /* Header Section */
+  .project-card-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 1rem;
   }
   
   .project-icon {
-    font-size: 1.25rem;
-    font-weight: bold;
+    font-size: 1.5rem;
     color: #3b82f6;
   }
   
-  .project-status {
-    font-size: 0.875rem;
-    color: #10b981;
-    font-weight: 600;
-  }
-  
   .project-name {
-    margin-top: 1rem;
     font-size: 1.125rem;
     font-weight: 600;
+    color: #1f2937;
   }
   
-  .project-description {
+  /* Status Badge */
+  .project-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    background-color: #d1fae5;
+    color: #065f46;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
     margin-top: 0.5rem;
+  }
+  
+  /* Description */
+  .project-description {
     font-size: 0.875rem;
     color: #4b5563;
+    line-height: 1.5;
   }
   
-  .project-actions {
-    margin-top: 1rem;
+  /* Footer Section */
+  .project-card-footer {
     display: flex;
-    gap: 0.5rem;
-    justify-content: end;
+    justify-content: flex-end;
   }
   
   .delete-button {
-    font-size: 0.875rem;
-    padding: 0.25rem 0.75rem;
     background-color: #fee2e2;
     color: #ef4444;
-    border-radius: 0.375rem;
+    border-radius: 50%;
+    padding: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -105,7 +115,7 @@
   
   .delete-button:hover {
     background-color: #fecaca;
-  }
+  }  
   
   .create-project-button {
     background-color: #3b82f6;
@@ -120,3 +130,7 @@
     background-color: #2563eb;
   }
   
+  .project-icon {
+    font-size: 1.5rem; /* Icon size */
+    color: #3b82f6; /* Blue color */
+  }

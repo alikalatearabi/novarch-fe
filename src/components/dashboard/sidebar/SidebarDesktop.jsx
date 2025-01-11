@@ -11,21 +11,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { RsetCaptureActive, selectCaptureActive } from "@/slices/captureSlices";
 import { useAuth } from "@/context/AuthContext";
 
-const sideBarHeader = (pathname) => {
-  if (pathname === "/textSearch") {
-    return "جستجوی متنی";
-  } else if (pathname === "/advanceSearch") {
-    return "جستجوی پیشرفته";
-  } else {
-    return <div className="flex justify-center me-10">{/* <img src={logo} alt="Logo" /> */}</div>;
-  }
-};
-
 const SidebarDesktop = (props) => {
   const auth = useAuth();
 
   const dispatch = useDispatch();
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const pathname = usePathname();
   const captureActive = useSelector(selectCaptureActive);
 
@@ -35,9 +25,10 @@ const SidebarDesktop = (props) => {
 
   return (
     <aside
-      className={`w-[65px] hover:w-[250px] transition-all 0.2s max-w-xs h-[90vh] fixed z-40 bg-white shadow ${props.className}`}
+      className={`w-[250px] hover:w-[250px] transition-all 0.2s max-w-xs h-[92vh] fixed z-40 bg-white shadow ${props.className}`}
       onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => setIsExpanded(false)}
+      onMouseLeave={() => setIsExpanded(true)}
+      style={{borderLeft: '1px solid #D8D8D8'}}
     >
       <div className="h-full">
         <div className={`${true ? "mt-10" : "mt-3"}`}>
