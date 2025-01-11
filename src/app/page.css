@@ -48,3 +48,50 @@
 .no-notes p {
   margin: 0;
 }
+
+/* General Action Button Styles */
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.action-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Back Button */
+.back-button {
+  background-color: #f3f4f6; /* Gray-100 */
+  color: #374151; /* Gray-700 */
+}
+
+.back-button:hover {
+  background-color: #e5e7eb; /* Gray-200 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Add Button */
+.add-button {
+  background-color: #3b82f6; /* Blue-500 */
+  color: white;
+}
+
+.add-button:hover {
+  background-color: #2563eb; /* Blue-600 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-button:focus {
+  outline: 2px solid #1d4ed8; /* Blue-700 */
+  outline-offset: 2px;
+}

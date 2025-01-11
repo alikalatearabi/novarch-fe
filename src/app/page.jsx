@@ -87,20 +87,44 @@ const Page = () => {
             <span className="text-[25px]" style={{ fontWeight: 'bold' }}>{projectName || "هیچ پروژه‌ای وجود ندارد"}</span>
           </div>
           <div className="flex items-center gap-4">
-            <Button
+            {projectId && (
+              <button
+                onClick={() => setShowAddSheetModal(true)}
+                className="action-button add-button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 mr-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 4v16m8-8H4"
+                  />
+                </svg>
+                افزودن شیت
+              </button>
+            )}
+            <button
               onClick={() => setProjectId(null)}
-              className="bg-gray-500 text-white hover:bg-gray-600"
+              className="action-button back-button"
             >
               بازگشت
-            </Button>
-            {projectId && (
-              <Button
-                onClick={() => setShowAddSheetModal(true)}
-                className="bg-blue-500 text-white hover:bg-blue-600"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
               >
-                افزودن شیت
-              </Button>
-            )}
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
           </div>
         </header>
 
