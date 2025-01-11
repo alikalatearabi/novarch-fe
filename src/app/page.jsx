@@ -50,6 +50,15 @@ const Page = () => {
     fetchSheets();
   }, [projectId]);
 
+  useEffect(() => {
+    setRecentSheets(
+      sheets
+        .slice()
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .slice(0, 5)
+    );
+  }, [sheets]);
+
   const handleAddSheet = (newSheet) => {
     const sheetData = {
       id: new Date().getTime(),

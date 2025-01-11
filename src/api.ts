@@ -125,6 +125,9 @@ export const api = {
         },
         getAll: () => {
             return axios.get<any, ExtendedAxiosResponse<GeneralResponse<any>>>('/api/project');
-        }
+        },
+        delete: (id: any) => {
+            return axios.delete(`/api/project/${id}`);
+        },
     }
 };

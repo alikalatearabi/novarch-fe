@@ -3,6 +3,7 @@ import axios from "axios";
 import './modal.css'
 
 const UploadVideoModal = ({ sheet, onClose, onVideoUpload }) => {
+  console.log(sheet)
   const [videoFile, setVideoFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);

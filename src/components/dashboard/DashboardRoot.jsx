@@ -49,8 +49,29 @@ const DashboardRoot = ({ children }) => {
   };
 
   const handleProjectCreate = () => {
-    fetchProjects(); // Update project list after creation
     setShowCreateProjectModal(false);
+  };
+
+  const handleDeleteProject = async (projectId) => {
+    if (!confirm("Are you sure you want to delete this project?")) {
+      return;
+    }
+
+    try {
+      const { ok, data } = await api.project.delete(projectId);
+
+      if (!ok) {
+        throw new Error(data?.message || "Failed to delete the project");
+      }
+
+      alert("Project deleted successfully.");
+      setProjects((prevProjects) =>
+        prevProjects.filter((project) => project.id !== projectId)
+      );
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      alert("Error deleting project. Please try again.");
+    }
   };
 
   return (
@@ -82,8 +103,8 @@ const DashboardRoot = ({ children }) => {
                   <button
                     className="delete-button"
                     onClick={(e) => {
-                      e.stopPropagation();
-                      alert(`Delete project: ${project.name}`);
+                      e.stopPropagation(); // Prevent triggering the project card click
+                      handleDeleteProject(project.id); // Call the delete handler
                     }}
                   >
                     <svg

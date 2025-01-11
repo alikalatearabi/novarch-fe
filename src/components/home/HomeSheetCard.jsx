@@ -33,7 +33,7 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
   };
 
   const handleViewVirtualTour = (e, sheetId) => {
-    e.stopPropagation(); // Prevent card click event
+    e.stopPropagation(); 
     router.push(`/images?sheetId=${sheetId}`);
   };
 
@@ -102,7 +102,7 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
         <UploadVideoModal
           sheet={selectedSheet}
           onClose={() => setSelectedSheet(null)}
-          onVideoUpload={handleVideoUpload} // Pass the handler here
+          onVideoUpload={handleVideoUpload} 
         />
       )}
     </>
