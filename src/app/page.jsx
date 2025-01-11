@@ -61,7 +61,7 @@ const Page = () => {
 
   const handleAddSheet = (newSheet) => {
     const sheetData = {
-      id: new Date().getTime(),
+      id: newSheet.id,
       title: newSheet.title || `شیت جدید`,
       date: new Date().toLocaleDateString("fa-IR"),
       image: URL.createObjectURL(newSheet.file),

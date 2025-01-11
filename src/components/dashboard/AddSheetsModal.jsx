@@ -29,7 +29,7 @@ const AddSheetsModal = ({ onClose, onAddSheet, projectId }) => {
         throw new Error(data.message || "خطا در آپلود شیت");
       }
   
-      onAddSheet({ title: sheetTitle, file: sheetFile }); // Update the UI
+      onAddSheet({ title: sheetTitle, file: sheetFile, id: data.responseObject.id  }); // Update the UI
       onClose(); // Close the modal
     } catch (err) {
       setError(err.message);
