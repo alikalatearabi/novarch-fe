@@ -7,6 +7,8 @@ import AddSheetsModal from "@/components/dashboard/AddSheetsModal";
 import { api } from "@/api";
 import { useProject } from "@/context/projectContext";
 
+import './page.css'
+
 const Page = () => {
   const { projectName, projectId, setProjectId } = useProject();
   const [sheets, setSheets] = useState([]);
@@ -81,7 +83,7 @@ const Page = () => {
       <div id="homeContainer" className="px-10 h-[100%]">
         <header id="projectTitle" className="mt-10 flex justify-between items-center bg-white pb-5">
           <div id="projectName&Address" className="flex flex-col gap-3">
-            <span className="text-[25px]" style={{fontWeight: 'bold'}}>{projectName || "هیچ پروژه‌ای وجود ندارد"}</span>
+            <span className="text-[25px]" style={{ fontWeight: 'bold' }}>{projectName || "هیچ پروژه‌ای وجود ندارد"}</span>
           </div>
           <div className="flex items-center gap-4">
             <Button
@@ -106,9 +108,9 @@ const Page = () => {
             <>
               <div id="plansSection" className="mt-10 bg-white">
                 <header className="flex justify-between">
-                  <span className="text-[17px]" style={{fontWeight: 'bold'}}>نقشه‌های فعال</span>
+                  <span className="text-[17px]" style={{ fontWeight: 'bold' }}>نقشه‌های فعال</span>
                 </header>
-                <div id="plans" className="mt-5 cursor-pointer overflow-auto p-1">
+                <div id="plans" className="plans-container">
                   <HomeSheetCard sheets={sheets} setSheets={setSheets} />
                 </div>
               </div>
@@ -117,7 +119,7 @@ const Page = () => {
                 <header className="flex justify-between">
                   <span className="text-[20px]">نقشه‌های اخیر</span>
                 </header>
-                <div id="recentPlans" className="mt-5 mr-10 cursor-pointer overflow-auto p-5">
+                <div id="recentPlans" className="plans-container">
                   <HomeSheetCard sheets={recentSheets} setSheets={setSheets} />
                 </div>
               </div>

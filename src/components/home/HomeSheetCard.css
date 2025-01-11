@@ -2,7 +2,6 @@
 .sheets-card-container {
     display: inline-flex;
     gap: 1.25rem;
-    flex-wrap: wrap;
   }
   
   /* Individual sheet card */
