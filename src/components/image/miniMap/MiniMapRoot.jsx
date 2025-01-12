@@ -1,25 +1,63 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import MiniMapDetailController from "./MiniMapDetailController";
-import MinimapImage from "../../../../public/images/minimapimage.png";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectImageExpandMinimap } from "@/slices/imageSlices";
+import { api } from "@/api";
 
-const MiniMapRoot = () => {
-  const dispatch = useDispatch();
+const MiniMapRoot = ({ sheetId }) => {
   const imageExpandMinimap = useSelector(selectImageExpandMinimap);
+  const [sheetData, setSheetData] = useState(null);
+
+  useEffect(() => {
+    const fetchSheet = async () => {
+
+      if (!sheetId) return;
+      try {
+        const response = await api.sheets.getById(sheetId);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch sheets");
+        }
+
+        const { data } = response;
+        console.log(data.success)
+        if (data.success) {
+          setSheetData(data);
+        }
+      } catch (error) {
+        console.error("Error fetching sheets:", error);
+      }
+    };
+
+    fetchSheet();
+  }, [sheetId]);
+
+  useEffect(() =>{
+    console.log(sheetData)
+  }, [sheetData])
 
   return (
     <div
       id="miniMapRootContainer"
-      className={`${
-        imageExpandMinimap ? "w-[600px] h-[300px] " : "w-[250px] h-[150px] "
-      }  bg-white shadow-lg transition-all 0.9s ease-out`}
+      className={`${imageExpandMinimap ? "w-[600px] h-[300px]" : "w-[250px] h-[150px]"
+        } bg-white shadow-lg transition-all 0.9s ease-out`}
     >
       <MiniMapDetailController />
       <div id="planImage" className="h-full flex items-center justify-center border">
-        <Image src={MinimapImage} alt="minimap" className="my-auto cursor-pointer" />
+        {sheetData ? (
+          <Image
+            src={`http://87.248.156.130:9000/${sheetData.responseObject.imagePath}`}
+            alt={sheetData.name || "MiniMap"}
+            className="my-auto cursor-pointer"
+            width={imageExpandMinimap ? 600 : 250}
+            height={imageExpandMinimap ? 300 : 150}
+            style={{borderRadius: '10px'}}
+          />
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
     </div>
   );

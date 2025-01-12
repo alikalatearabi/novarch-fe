@@ -76,8 +76,8 @@
   }
   
   .upload-icon.edit-mode {
-    background-color: #3b82f6; /* Blue-500 */
-    color: white;
+    background-color: #1C4073;
+    color: white !important;  
     cursor: pointer;
   }
   

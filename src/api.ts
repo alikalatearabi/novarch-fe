@@ -117,6 +117,9 @@ export const api = {
                     'Content-Type': 'multipart/form-data',
                 }
             });
+        },
+        getById: (id: number) => {
+            return axios.get<any, ExtendedAxiosResponse<GeneralResponse<any>>>(`/api/sheets/${id}`);
         }
     },
     project: {

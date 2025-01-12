@@ -26,7 +26,7 @@ const UploadVideoModal = ({ sheet, onClose, onVideoUpload }) => {
 
     try {
       const response = await axios.post(
-        "http://87.248.156.130:8000/api/upload/upload-video",
+        `http://${process.env.NEXT_PUBLIC_API_ADDRESS}/api/upload/upload-video`,
         formData,
         {
           timeout: 600000,

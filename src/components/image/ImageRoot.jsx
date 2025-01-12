@@ -18,7 +18,7 @@ const ImageRoot = () => {
 
     async function fetchFrames() {
       try {
-        const response = await fetch(`http://87.248.156.130:8000/api/upload/frames/${sheetId}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_ADDRESS}/api/upload/frames/${sheetId}`);
         const result = await response.json();
 
         if (result.success) {
@@ -31,7 +31,6 @@ const ImageRoot = () => {
             };
             return acc;
           }, {});
-          console.log(data)
           setImageData(data);
           setCurrentImage(data[frames[0].name]);
         } else {
@@ -70,7 +69,7 @@ const ImageRoot = () => {
         <ImageFilterCaptureControllerRoot navigate={navigate} />
       </div>
       <div id="miniMap" className="absolute top-3 left-3 z-10">
-        <MiniMapRoot />
+        <MiniMapRoot sheetId={sheetId} />
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
 
   const handleDelete = async (sheetId) => {
     try {
-      const response = await fetch(`http://87.248.156.130:8000/api/sheets/${sheetId}`, {
+      const response = await fetch(`http://${process.env.NEXT_PUBLIC_API_ADDRESS}/api/sheets/${sheetId}`, {
         method: "DELETE",
       });
 

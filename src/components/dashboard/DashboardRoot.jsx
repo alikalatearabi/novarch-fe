@@ -153,7 +153,7 @@ const DashboardRoot = ({ children }) => {
       )}
 
       {!projectId && (
-        <div className="fixed bottom-5" style={{ right: '280px' }}>
+        <div className="fixed bottom-5" style={{ right: '220px' }}>
           <button
             onClick={() => setShowCreateProjectModal(true)}
             className="create-project-button"
