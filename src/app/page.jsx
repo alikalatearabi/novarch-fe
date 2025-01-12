@@ -86,7 +86,7 @@ const Page = () => {
           <div id="projectName&Address" className="flex flex-col gap-3">
             <span className="text-[25px]" style={{ fontWeight: 'bold' }}>{projectName || "هیچ پروژه‌ای وجود ندارد"}</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4" style={{paddingLeft: '20px'}}>
             {projectId && (
               <button
                 onClick={() => setShowAddSheetModal(true)}

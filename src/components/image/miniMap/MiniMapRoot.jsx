@@ -53,7 +53,6 @@ const MiniMapRoot = ({ sheetId }) => {
             className="my-auto cursor-pointer"
             width={imageExpandMinimap ? 600 : 250}
             height={imageExpandMinimap ? 300 : 150}
-            style={{borderRadius: '10px'}}
           />
         ) : (
           <p>Loading...</p>
