@@ -81,7 +81,7 @@ const Page = () => {
 
   return (
     <div className="relative">
-      <div id="homeContainer" className="px-10 h-[100%]">
+      <div id="homeContainer" className="h-[100%]" style={{paddingRight: '180px'}}>
         <header id="projectTitle" className="mt-10 flex justify-between items-center bg-white pb-5">
           <div id="projectName&Address" className="flex flex-col gap-3">
             <span className="text-[25px]" style={{ fontWeight: 'bold' }}>{projectName || "هیچ پروژه‌ای وجود ندارد"}</span>

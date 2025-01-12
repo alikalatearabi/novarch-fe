@@ -25,7 +25,7 @@ const SidebarDesktop = (props) => {
 
   return (
     <aside
-      className={`w-[250px] hover:w-[250px] transition-all 0.2s max-w-xs h-[92vh] fixed z-40 bg-white shadow ${props.className}`}
+      className={`w-[200px] hover:w-[200px] transition-all 0.2s max-w-xs h-[92vh] fixed z-40 bg-white shadow ${props.className}`}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(true)}
       style={{borderLeft: '1px solid #D8D8D8'}}

@@ -18,7 +18,7 @@ const ImageRoot = () => {
 
     async function fetchFrames() {
       try {
-        const response = await fetch(`http://87.248.156.130:8000/api/upload/frames/${sheetId}`);
+        const response = await fetch(`http://localhost:8000/api/upload/frames/${sheetId}`);
         const result = await response.json();
 
         if (result.success) {
