@@ -25,7 +25,7 @@ const ImageRoot = () => {
           const frames = result.responseObject.frames;
           const data = frames.reduce((acc, frame, index) => {
             acc[frame.name] = {
-              imageUrl: `http://87.248.156.130:9000/${frame.url}`,
+              imageUrl: `https://files.novaarchai.com/${frame.url}`,
               forward: index < frames.length - 1 ? { targetImage: frames[index + 1].name } : undefined,
               backward: index > 0 ? { targetImage: frames[index - 1].name } : undefined,
             };

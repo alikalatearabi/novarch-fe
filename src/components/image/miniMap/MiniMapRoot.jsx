@@ -48,7 +48,7 @@ const MiniMapRoot = ({ sheetId }) => {
       <div id="planImage" className="h-full flex items-center justify-center border">
         {sheetData ? (
           <Image
-            src={`http://87.248.156.130:9000/${sheetData.responseObject.imagePath}`}
+            src={`https://files.novaarchai.com/${sheetData.responseObject.imagePath}`}
             alt={sheetData.name || "MiniMap"}
             className="my-auto cursor-pointer"
             width={imageExpandMinimap ? 600 : 250}
