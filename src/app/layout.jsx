@@ -7,11 +7,12 @@ import DashboardRoot from "@/components/dashboard/DashboardRoot";
 import "react-calendar-datetime-picker/dist/style.css";
 import "./globals.css";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { SheetProvider } from "@/context/sheetContext";
 import { usePathname } from "next/navigation";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
-  const isAuthPage = pathname === "/login"; 
+  const isAuthPage = pathname === "/login";
 
   return (
     <html lang="en">
@@ -19,11 +20,13 @@ export default function RootLayout({ children }) {
         <ReduxStoreProviders>
           <AuthProvider>
             <ProjectProvider>
-              {isAuthPage ? (
-                <>{children}</> 
-              ) : (
-                <DashboardRoot>{children}</DashboardRoot>
-              )}
+              <SheetProvider>
+                {isAuthPage ? (
+                  <>{children}</>
+                ) : (
+                  <DashboardRoot>{children}</DashboardRoot>
+                )}
+              </SheetProvider>
             </ProjectProvider>
           </AuthProvider>
         </ReduxStoreProviders>

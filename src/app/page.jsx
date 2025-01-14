@@ -1,17 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import HomeSheetCard from "@/components/home/HomeSheetCard";
 import AddSheetsModal from "@/components/dashboard/AddSheetsModal";
 import { api } from "@/api";
 import { useProject } from "@/context/projectContext";
 import RecentSheetCard from "@/components/home/RecentSheetCard";
+import { useSheet } from "@/context/sheetContext";
 
-import './page.css'
+import "./page.css";
 
 const Page = () => {
   const { projectName, projectId, setProjectId } = useProject();
+  const { setLastSheetId } = useSheet(); // Access `setLastSheetId` from the SheetContext
+
   const [sheets, setSheets] = useState([]);
   const [recentSheets, setRecentSheets] = useState([]);
   const [showAddSheetModal, setShowAddSheetModal] = useState(false);
@@ -38,6 +40,12 @@ const Page = () => {
             hasVideo: sheet.hasVideo,
           }));
           setSheets(formattedSheets);
+
+          // Update the last sheet ID in the context
+          if (formattedSheets.length > 0) {
+            setLastSheetId(formattedSheets[0].id); // Assuming the first sheet is the last created
+          }
+
           setRecentSheets(
             formattedSheets
               .slice()
@@ -51,7 +59,7 @@ const Page = () => {
     };
 
     fetchSheets();
-  }, [projectId]);
+  }, [projectId, setLastSheetId]);
 
   useEffect(() => {
     setRecentSheets(
@@ -77,16 +85,24 @@ const Page = () => {
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .slice(0, 5)
     );
+
+    // Update the last sheet ID in the context when adding a new sheet
+    setLastSheetId(sheetData.id);
   };
 
   return (
     <div className="relative">
-      <div id="homeContainer" className="h-[100%]" style={{paddingRight: '180px'}}>
-        <header id="projectTitle" className="mt-10 flex justify-between items-center bg-white pb-5">
+      <div id="homeContainer" className="h-[100%]" style={{ paddingRight: "180px" }}>
+        <header
+          id="projectTitle"
+          className="mt-10 flex justify-between items-center bg-white pb-5"
+        >
           <div id="projectName&Address" className="flex flex-col gap-3">
-            <span className="text-[25px]" style={{ fontWeight: 'bold' }}>{projectName || "هیچ پروژه‌ای وجود ندارد"}</span>
+            <span className="text-[25px]" style={{ fontWeight: "bold" }}>
+              {projectName || "هیچ پروژه‌ای وجود ندارد"}
+            </span>
           </div>
-          <div className="flex items-center gap-4" style={{paddingLeft: '20px'}}>
+          <div className="flex items-center gap-4" style={{ paddingLeft: "20px" }}>
             {projectId && (
               <button
                 onClick={() => setShowAddSheetModal(true)}
@@ -100,11 +116,7 @@ const Page = () => {
                   stroke="currentColor"
                   strokeWidth={2}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 4v16m8-8H4"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
                 افزودن شیت
               </button>
@@ -133,7 +145,9 @@ const Page = () => {
             <>
               <div id="plansSection" className="mt-10 bg-white">
                 <header className="flex justify-between">
-                  <span className="text-[17px]" style={{ fontWeight: 'bold' }}>نقشه‌های فعال</span>
+                  <span className="text-[17px]" style={{ fontWeight: "bold" }}>
+                    نقشه‌های فعال
+                  </span>
                 </header>
                 <div id="plans" className="plans-container">
                   <HomeSheetCard sheets={sheets} setSheets={setSheets} />
@@ -142,20 +156,22 @@ const Page = () => {
 
               <div id="recentPlansSection" className="mt-10 bg-white">
                 <header className="flex justify-between">
-                  <span className="text-[17px]" style={{ fontWeight: 'bold' }}>نقشه‌های اخیر</span>
+                  <span className="text-[17px]" style={{ fontWeight: "bold" }}>
+                    نقشه‌های اخیر
+                  </span>
                 </header>
                 <div id="recentPlans" className="plans-container">
                   <RecentSheetCard sheets={recentSheets} setSheets={setSheets} />
                 </div>
               </div>
 
-              {/* Notes Section */}
-              <div id="notesSection" className="mt-10 px-10 z-10 bg-gray-100 p-5 rounded-lg shadow-md">
+              <div
+                id="notesSection"
+                className="mt-10 px-10 z-10 bg-gray-100 p-5 rounded-lg shadow-md"
+              >
                 <header className="flex items-center gap-2">
                   <span className="text-[20px]">یادداشت‌ها</span>
                 </header>
-
-                {/* Show this when there are no notes */}
                 <div className="no-notes">
                   <p>هیچ یادداشتی وجود ندارد</p>
                 </div>

@@ -1,45 +1,90 @@
-'use client';
+"use client";
 
-import { Button } from "@/components/ui/button";
-import React from "react";
-import ImageRoot from "@/components/image/ImageRoot";
-import {
-  selectImageSplitView,
-  selectImageSplitViewLock,
-  RsetImageSplitViewLock,
-} from "@/slices/imageSlices";
-import { useDispatch, useSelector } from "react-redux";
-import { Lock, Unlock } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import VirtualTour from '../../components/image/virtualTour';
+import ImageSideControllerRoot from "../../components/image/controllers/ImageSideControllerRoot";
+import ImageFilterCaptureControllerRoot from "../../components/image/controllers/ImageFilterCaptureControllerRoot";
+import MiniMapRoot from "../../components/image/miniMap/MiniMapRoot";
+import { useSheet } from "@/context/sheetContext";
 
-const Page = () => {
-  const dispatch = useDispatch();
-  const imageSplitView = useSelector(selectImageSplitView);
-  const imageSplitViewLock = useSelector(selectImageSplitViewLock);
+const ImageRoot = () => {
+  const searchParams = useSearchParams();
+  const sheetIdFromURL = searchParams.get("sheetId"); // Get sheetId from the URL
+  const { lastSheetId } = useSheet(); // Access lastSheetId from context
+
+  const [sheetId, setSheetId] = useState(sheetIdFromURL || lastSheetId); // Fallback to lastSheetId if URL param is missing
+  const [imageData, setImageData] = useState({});
+  const [currentImage, setCurrentImage] = useState(null);
+
+  useEffect(() => {
+    if (!sheetId) return;
+
+    async function fetchFrames() {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_ADDRESS}/api/upload/frames/${sheetId}`
+        );
+        const result = await response.json();
+
+        if (result.success) {
+          const frames = result.responseObject.frames;
+          const data = frames.reduce((acc, frame, index) => {
+            acc[frame.name] = {
+              imageUrl: `https://files.novaarchai.com/${frame.url}`,
+              forward:
+                index < frames.length - 1
+                  ? { targetImage: frames[index + 1].name }
+                  : undefined,
+              backward:
+                index > 0
+                  ? { targetImage: frames[index - 1].name }
+                  : undefined,
+            };
+            return acc;
+          }, {});
+          setImageData(data);
+          setCurrentImage(data[frames[0].name]);
+        } else {
+          console.error("Failed to fetch frames:", result.message);
+        }
+      } catch (error) {
+        console.error("Error fetching frames:", error);
+      }
+    }
+
+    fetchFrames();
+  }, [sheetId]);
+
+  const navigate = (direction) => {
+    if (currentImage) {
+      const target =
+        direction === "forward"
+          ? currentImage.forward?.targetImage
+          : currentImage.backward?.targetImage;
+      if (target) {
+        setCurrentImage(imageData[target]);
+      }
+    }
+  };
 
   return (
-    <div id="container" className="relative">
-      {!imageSplitView ? (
-        <ImageRoot />
-      ) : (
-        <div className="flex gap-2 transition-all">
-          <ImageRoot />
-        </div>
-      )}
-      {imageSplitView && (
-        // @ts-ignore
-        <Button
-          className={`absolute top-1/2 left-1/2 px-1.5 transform -translate-x-1/2 -translate-y-1/2 ${
-            !imageSplitViewLock ? "bg-white hover:bg-gray-100" : "bg-blue-500 hover:bg-blue-400"
-          }`}
-          onClick={() => {
-            dispatch(RsetImageSplitViewLock(!imageSplitViewLock));
-          }}
-        >
-          {imageSplitViewLock ? <Lock /> : <Unlock color="black" />}
-        </Button>
-      )}
+    <div id="imageContainer" className="relative h-[88vh]">
+      <VirtualTour currentImage={currentImage} />
+      <div id="sideController" className="absolute bottom-3 left-3 z-10">
+        <ImageSideControllerRoot />
+      </div>
+      <div
+        id="filterCaptureController"
+        className="absolute bottom-3 left-1/2 transform -translate-x-1/2 z-10"
+      >
+        <ImageFilterCaptureControllerRoot navigate={navigate} />
+      </div>
+      <div id="miniMap" className="absolute top-3 left-3 z-10">
+        <MiniMapRoot sheetId={sheetId} />
+      </div>
     </div>
   );
 };
 
-export default Page;
+export default ImageRoot;
