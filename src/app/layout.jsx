@@ -9,6 +9,8 @@ import "./globals.css";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { SheetProvider } from "@/context/sheetContext";
 import { usePathname } from "next/navigation";
+import ProtectedRoute from "@/components/ProtectedRoute";
+
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -21,11 +23,13 @@ export default function RootLayout({ children }) {
           <AuthProvider>
             <ProjectProvider>
               <SheetProvider>
-                {isAuthPage ? (
-                  <>{children}</>
-                ) : (
-                  <DashboardRoot>{children}</DashboardRoot>
-                )}
+                <ProtectedRoute>
+                  {isAuthPage ? (
+                    <>{children}</>
+                  ) : (
+                    <DashboardRoot>{children}</DashboardRoot>
+                  )}
+                </ProtectedRoute>
               </SheetProvider>
             </ProjectProvider>
           </AuthProvider>
