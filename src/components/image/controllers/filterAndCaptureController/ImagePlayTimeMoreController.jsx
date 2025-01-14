@@ -3,8 +3,18 @@ import { ChevronRight, ChevronLeft, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 import { selectImageSplitView } from "@/slices/imageSlices";
 
-const ImagePlayTimeMoreController = ({ navigate }) => {
+const ImagePlayTimeMoreController = ({ navigate, uploadedAt }) => {
   const imageSplitView = useSelector(selectImageSplitView);
+
+  // Format uploadedAt to a readable time (e.g., 1:38 PM)
+  const formatTime = (timestamp) => {
+    if (!timestamp) return "--:--";
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString("fa-IR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
 
   return (
     <div
@@ -26,7 +36,7 @@ const ImagePlayTimeMoreController = ({ navigate }) => {
         </div>
       </div>
       <div id="captureTime">
-        <span className="text-sm text-gray-700">1:38 ب.ظ</span>
+        <span className="text-sm text-gray-700">{formatTime(uploadedAt)}</span>
       </div>
       <div id="more">
         <MoreHorizontal className="w-5 h-5 text-gray-700 cursor-pointer hover:text-blue-400" />

@@ -29,7 +29,7 @@ const VirtualTour = ({ currentImage }) => {
         top: 0,
         left: 0,
         width: "100vw",
-        height: "90vh",
+        height: "92vh",
         zIndex: 1,
         overflow: "hidden",
         pointerEvents: "none",

@@ -6,14 +6,14 @@ import ImageDateController from "./filterAndCaptureController/ImageDateControlle
 import { useSelector } from "react-redux";
 import { selectImageSplitView } from "@/slices/imageSlices";
 
-const ImageFilterCaptureControllerRoot = ({ navigate }) => {
+const ImageFilterCaptureControllerRoot = ({ navigate, uploadedAt }) => {
   const imageSplitView = useSelector(selectImageSplitView);
 
   return (
     <div id="controllerContainer" className="flex gap-2">
       {!imageSplitView && <ImageFilterController />}
-      <ImagePlayTimeMoreController navigate={navigate} />
-      <ImageDateController />
+      <ImagePlayTimeMoreController navigate={navigate} uploadedAt={uploadedAt} />
+      <ImageDateController uploadedAt={uploadedAt}/>
     </div>
   );
 };

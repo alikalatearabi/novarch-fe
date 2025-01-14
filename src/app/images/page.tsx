@@ -29,9 +29,11 @@ const ImageRoot = () => {
 
         if (result.success) {
           const frames = result.responseObject.frames;
+          const uploadedtime = result.responseObject.uploadedAt;
           const data = frames.reduce((acc, frame, index) => {
             acc[frame.name] = {
               imageUrl: `https://files.novaarchai.com/${frame.url}`,
+              uploadedAt: uploadedtime,
               forward:
                 index < frames.length - 1
                   ? { targetImage: frames[index + 1].name }
@@ -78,8 +80,12 @@ const ImageRoot = () => {
         id="filterCaptureController"
         className="absolute bottom-3 left-1/2 transform -translate-x-1/2 z-10"
       >
-        <ImageFilterCaptureControllerRoot navigate={navigate} />
+        <ImageFilterCaptureControllerRoot
+          navigate={navigate}
+          uploadedAt={currentImage?.uploadedAt}
+        />
       </div>
+
       <div id="miniMap" className="absolute top-3 left-3 z-10">
         <MiniMapRoot sheetId={sheetId} />
       </div>
