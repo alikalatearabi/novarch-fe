@@ -92,7 +92,7 @@ const Page = () => {
 
   return (
     <div className="relative">
-      <div id="homeContainer" className="h-[100%]" style={{ paddingRight: "180px" }}>
+      <div id="homeContainer" className="h-full">
         <header
           id="projectTitle"
           className="mt-10 flex justify-between items-center bg-white pb-5"

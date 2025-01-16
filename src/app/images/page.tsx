@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import VirtualTour from '../../components/image/virtualTour';
 import ImageSideControllerRoot from "../../components/image/controllers/ImageSideControllerRoot";
@@ -12,8 +12,8 @@ const ImageRoot = () => {
   const searchParams = useSearchParams();
   const sheetIdFromURL = searchParams.get("sheetId"); // Get sheetId from the URL
   const { lastSheetId } = useSheet(); // Access lastSheetId from context
-
-  const [sheetId, setSheetId] = useState(sheetIdFromURL || lastSheetId); // Fallback to lastSheetId if URL param is missing
+  
+  const sheetId = useMemo(() => sheetIdFromURL || lastSheetId, [sheetIdFromURL, lastSheetId]); // Fallback to lastSheetId if URL param is missing
   const [imageData, setImageData] = useState({});
   const [currentImage, setCurrentImage] = useState(null);
 
