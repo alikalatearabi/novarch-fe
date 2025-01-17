@@ -19,7 +19,7 @@ const DashboardHeader = ({ projectName }) => {
   const auth = useAuth();
 
   return (
-    <div id="headerContainer" className="h-[8vh] w-[100vw] flex" style={{borderBottom: '1px solid #D8D8D8'}}>
+    <div id="headerContainer" className="h-[8vh] flex" style={{borderBottom: '1px solid #D8D8D8'}}>
       <div id="logo&routes" className="px-5 flex justify-start items-center gap-10 flex-1">
         <div id="logo">
           <Image src={Logo} width={150} height={80} alt="header" style={{borderRadius: '10px'}} />

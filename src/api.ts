@@ -92,6 +92,15 @@ axios.interceptors.request.use(async function (request) {
     return request;
 });
 
+export type GetSheetsOfProjectResponse = GeneralResponse<{
+    id: number;
+    name: number;
+    projectId: number
+    imagePath: string;
+    createdAt: string;
+    hasVideo: true;
+}[]>
+
 export const api = {
     csrf: () => axios.get('csrf'),
     auth: {
@@ -109,7 +118,7 @@ export const api = {
     },
     sheets: {
         get: (projectId: number) => {
-            return axios.get<any, ExtendedAxiosResponse<GeneralResponse<any>>>('/api/sheets', { params: { projectId } });
+            return axios.get<any, ExtendedAxiosResponse<GetSheetsOfProjectResponse>>('/api/sheets', { params: { projectId } });
         },
         post: (data: any) => {
             return axios.post<any, ExtendedAxiosResponse<GeneralResponse<any>>>('/api/sheets', data, {
@@ -134,3 +143,7 @@ export const api = {
         },
     }
 };
+
+export const getFileAccessUrl = (path: string) => {
+    return new URL(path, 'https://files.novaarchai.com/').href;
+}

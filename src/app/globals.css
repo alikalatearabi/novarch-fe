@@ -127,16 +127,17 @@ body {
     /* sheets animation in layer mode  -------------------------*/
     @keyframes orbit {
       from {
-        transform: skew(-40deg);
+        /* transform: skew(-40deg); */
+        transform: rotateX(50deg) rotateY(0deg) rotateZ(-40deg);   
       }
       to {
-        transform: skew(40deg);
+        /* transform: skew(40deg); */
+        transform: rotateX(50deg) rotateY(0deg) rotateZ(40deg);
       }
     }
     
     .orbiting {
       animation: orbit 30s infinite alternate;
-      transform: rotateX(10deg);
     }
 
     /* ---------------------------------------------------------- */

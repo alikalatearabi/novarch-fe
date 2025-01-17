@@ -29,8 +29,8 @@ const SidebarDesktop = (props) => {
       onMouseLeave={() => setIsExpanded(true)}
       style={{borderLeft: '1px solid #D8D8D8'}}
     >
-      <div className="h-full">
-        <div className={`${true ? "mt-10" : "mt-3"}`}>
+      <div className="h-full relative">
+        <div className={`${true ? "pt-10" : "pt-3"}`}>
           {true && (
             <div className="flex flex-col gap-3 w-full">
               {props.sidebarItems.links.map((item, index) => {
@@ -104,7 +104,7 @@ const SidebarDesktop = (props) => {
                       <div className="flex items-center gap-2">
                         <HardHat />
                         <span
-                          className={`   ${isExpanded ? "block opacity-100 transition-opacity 0.3s" : "transition-opacity 0.1s ease opacity-0 "}`}
+                          className={`${isExpanded ? "block opacity-100 transition-opacity 0.3s" : "transition-opacity 0.1s ease opacity-0 "}`}
                         >
                           تیم
                         </span>

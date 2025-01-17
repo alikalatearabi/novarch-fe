@@ -76,92 +76,95 @@ const DashboardRoot = ({ children }) => {
   };
 
   return (
-    <div id="root-container">
+    <div id="root-container" className="w-full">
       <DashboardHeader projectName={projectName} />
-      <Sidebar />
+      <div className="flex flex-row h-[92vh] w-full">
+        <Sidebar />
+        <div className="flex-1 w-full py-[16px] ps-[16px]" style={{ maxWidth: 'calc(100vw - 200px)'}}>
+          {!projectId ? (
+            <div className="projects-container">
+              <h2 className="projects-title">پروژه‌های شما</h2>
+              <div className="projects-grid">
+                {projects.map((project) => (
+                  <div
+                    key={project.id}
+                    className="project-card"
+                    onClick={() => handleProjectClick(project)}
+                  >
+                    {/* Card Header */}
+                    <div className="project-card-header">
+                      <div className="project-icon">
+                        <FaFolder />
+                      </div>
+                      <h3 className="project-name">{project.name}</h3>
+                    </div>
 
-      {!projectId ? (
-        <div className="projects-container">
-          <h2 className="projects-title">پروژه‌های شما</h2>
-          <div className="projects-grid">
-            {projects.map((project) => (
-              <div
-                key={project.id}
-                className="project-card"
-                onClick={() => handleProjectClick(project)}
-              >
-                {/* Card Header */}
-                <div className="project-card-header">
-                  <div className="project-icon">
-                    <FaFolder />
-                  </div>
-                  <h3 className="project-name">{project.name}</h3>
-                </div>
+                    {/* Status Badge */}
+                    <div className="project-status">
+                      {project.status || "فعال"}
+                    </div>
 
-                {/* Status Badge */}
-                <div className="project-status">
-                  {project.status || "فعال"}
-                </div>
-
-                {/* Description */}
-                {/* <p className="project-description">
+                    {/* Description */}
+                    {/* <p className="project-description">
                 {project.description || "بدون توضیحات"}
               </p> */}
 
-                {/* Card Footer */}
-                <div className="project-card-footer">
-                  <button
-                    className="delete-button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteProject(project.id);
-                    }}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M4 7h16M10 3h4m-4 0a1 1 0 00-1 1v1h6V4a1 1 0 00-1-1m-4 0h4"
-                      />
-                    </svg>
-                  </button>
-                </div>
+                    {/* Card Footer */}
+                    <div className="project-card-footer">
+                      <button
+                        className="delete-button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteProject(project.id);
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M4 7h16M10 3h4m-4 0a1 1 0 00-1 1v1h6V4a1 1 0 00-1-1m-4 0h4"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+          ) : (
+            <div>{children}</div>
+          )}
+
+          <div id="capture" className="absolute top-0 z-30">
+            <CaptureRoot />
           </div>
-        </div>
-      ) : (
-        <div className="lg:mr-[70px]">{children}</div>
-      )}
 
-      <div id="capture" className="absolute top-0 z-30">
-        <CaptureRoot />
+          {showCreateProjectModal && (
+            <CreateProjectModal
+              onClose={() => setShowCreateProjectModal(false)}
+              onCreate={handleProjectCreate}
+            />
+          )}
+
+          {!projectId && (
+            <div className="fixed bottom-5">
+              <button
+                onClick={() => setShowCreateProjectModal(true)}
+                className="create-project-button"
+              >
+                ایجاد پروژه
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-
-      {showCreateProjectModal && (
-        <CreateProjectModal
-          onClose={() => setShowCreateProjectModal(false)}
-          onCreate={handleProjectCreate}
-        />
-      )}
-
-      {!projectId && (
-        <div className="fixed bottom-5" style={{ right: '220px' }}>
-          <button
-            onClick={() => setShowCreateProjectModal(true)}
-            className="create-project-button"
-          >
-            ایجاد پروژه
-          </button>
-        </div>
-      )}
     </div>
   );
 };
