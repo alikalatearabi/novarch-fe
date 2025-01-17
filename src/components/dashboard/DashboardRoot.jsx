@@ -80,7 +80,7 @@ const DashboardRoot = ({ children }) => {
       <DashboardHeader projectName={projectName} />
       <div className="flex flex-row h-[92vh] w-full">
         <Sidebar />
-        <div className="flex-1 w-full py-[16px] ps-[16px]" style={{ maxWidth: 'calc(100vw - 200px)'}}>
+        <div className="flex-1 w-full ps-[16px] mr-[200px]" style={{ maxWidth: 'calc(100vw - 200px)' }}>
           {!projectId ? (
             <div className="projects-container">
               <h2 className="projects-title">پروژه‌های شما</h2>
@@ -91,7 +91,6 @@ const DashboardRoot = ({ children }) => {
                     className="project-card"
                     onClick={() => handleProjectClick(project)}
                   >
-                    {/* Card Header */}
                     <div className="project-card-header">
                       <div className="project-icon">
                         <FaFolder />
@@ -99,17 +98,9 @@ const DashboardRoot = ({ children }) => {
                       <h3 className="project-name">{project.name}</h3>
                     </div>
 
-                    {/* Status Badge */}
                     <div className="project-status">
                       {project.status || "فعال"}
                     </div>
-
-                    {/* Description */}
-                    {/* <p className="project-description">
-                {project.description || "بدون توضیحات"}
-              </p> */}
-
-                    {/* Card Footer */}
                     <div className="project-card-footer">
                       <button
                         className="delete-button"
@@ -139,10 +130,10 @@ const DashboardRoot = ({ children }) => {
               </div>
             </div>
           ) : (
-            <div>{children}</div>
+            <>{children}</>
           )}
 
-          <div id="capture" className="absolute top-0 z-30">
+          <div id="capture" className="absolute top-0 right-0 z-30">
             <CaptureRoot />
           </div>
 
