@@ -3,7 +3,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { HardHat, LogOut, MoreHorizontal, NotebookPen, ScanEye, Settings } from "lucide-react";
 import SidebarButton from "./SidebarButton";
 import { usePathname } from "next/navigation";
@@ -20,12 +19,12 @@ const SidebarDesktop = (props) => {
   const captureActive = useSelector(selectCaptureActive);
 
   let isActive;
-  const buttonClass = `w-full flex justify-between gap-4 rounded-none hover:text-blue-500 ${false ? "bg-gradient-to-r bg-blue-200  text-black hover:bg-blue-200 " : ""
+  const buttonClass = `w-full flex justify-between gap-4 rounded-none hover:text-blue-500 ${false ? "bg-gradient-to-r bg-blue-200 text-black hover:bg-blue-200 " : ""
     }`;
 
   return (
     <aside
-      className={`w-[200px] hover:w-[200px] transition-all 0.2s max-w-xs h-[92vh] fixed z-40 bg-white shadow ${props.className}`}
+      className={`w-[200px] transition-all 0.2s max-w-xs h-[92vh] fixed z-40 bg-white shadow ${props.className}`}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(true)}
       style={{borderLeft: '1px solid #D8D8D8'}}
@@ -72,12 +71,9 @@ const SidebarDesktop = (props) => {
                     icon={ScanEye}
                     iconActive={captureActive}
                     className={`${buttonClass}`}
-                  // onClickProps={() => {
-                  //   dispatch(RsetCaptureActive(true));
-                  // }}
                   >
                     <div
-                      className={`flex justify-start${isExpanded ? "block opacity-100 transition-opacity 0.3s" : "transition-opacity 0.1s ease opacity-0 "
+                      className={`flex justify-start${isExpanded ? "block opacity-100 transition-opacity 0.5s" : "transition-opacity 0.3s ease opacity-0 "
                         }`}
                     >
                       <span> عکس برداری</span>

@@ -1,0 +1,60 @@
+.capture-container {
+    background-color: white;
+    transition: all 0.3s ease-in-out;
+    margin-top: 8.5vh;
+    border-left: 1px solid #D8D8D8;
+    height: 91.5vh;
+  }
+  
+  .capture-container.capture-active {
+    width: 600px;
+    margin-right: 200px;
+  }
+  
+  .capture-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    padding: 0 20px;
+    height: 5vh;
+  }
+  
+  .capture-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+  }
+  
+  .capture-title-main {
+    font-size: 15px;
+  }
+  
+  .capture-title-sub {
+    font-size: 12px;
+  }
+  
+  .capture-close-icon {
+    cursor: pointer;
+  }
+  
+  .capture-filter {
+    width: 100%;
+    background-color: white;
+    border-bottom: 1px solid #D8D8D8;
+    border-top: 1px solid #D8D8D8;
+    margin-top: 1rem;
+    padding: 20px;
+    height: 15vh;
+    
+  }
+  
+  .capture-cards {
+    width: 100%;
+    background-color: #f3f4f6;
+    padding-right: 20px;
+    padding: 20px;
+    height: 69vh;
+  }
+  

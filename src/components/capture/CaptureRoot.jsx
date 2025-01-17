@@ -4,7 +4,7 @@ import CaptureContainer from "./CaptureContainer";
 
 const CaptureRoot = () => {
   return (
-    <div id="captureRootContainer">
+    <div id="captureRootContainer" >
       <CaptureContainer />
     </div>
   );

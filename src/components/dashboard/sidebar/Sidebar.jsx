@@ -1,7 +1,6 @@
 import React from "react";
 import SidebarDesktop from "@/components/dashboard/sidebar/SidebarDesktop";
 import SideBarMobile from "@/components/dashboard/sidebar/SidebarMobile";
-// import { useMediaQuery } from "usehooks";
 import { sidebarItems } from "@/apiServices/data";
 
 const SideBar = () => {

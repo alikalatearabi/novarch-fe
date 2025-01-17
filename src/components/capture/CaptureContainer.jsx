@@ -1,37 +1,67 @@
 "use client";
-import React from "react";
-import Logo from "../../../public/images/logo.jpg";
-import Image from "next/image";
+import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { RsetCaptureActive, selectCaptureActive } from "@/slices/captureSlices";
 import CaptureFilter from "./CaptureFilter";
 import CaptureCard from "./CaptureCard";
+import "./CaptureContainer.css";
+import { api } from "@/api";
+import { useProject } from "@/context/projectContext";
 
 const CaptureContainer = () => {
+  const { projectId } = useProject();
   const dispatch = useDispatch();
   const captureActive = useSelector(selectCaptureActive);
 
-  console.log(captureActive);
+  const [sheets, setSheets] = useState([]);
+
+  useEffect(() => {
+    const fetchSheets = async () => {
+      if (!projectId) return;
+      try {
+        const response = await api.sheets.get(projectId);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch sheets");
+        }
+
+        const { data } = response;
+        if (data.success) {
+          const formattedSheets = data.responseObject.map((sheet) => ({
+            id: sheet.id,
+            title: sheet.name,
+            date: new Date(sheet.createdAt).toLocaleDateString("fa-IR"), // Format date
+            image: `https://files.novaarchai.com/${sheet.imagePath}`, // Sheet image URL
+            location: sheet.location || "نامشخص", // Add location if available
+            hasVideo: sheet.hasVideo,
+          }));
+          setSheets(formattedSheets);
+        }
+      } catch (error) {
+        console.error("Error fetching sheets:", error);
+      }
+    };
+
+    fetchSheets();
+  }, [projectId]);
+
   return (
     <div
       id="headerContainer"
-      className={` ${
-        captureActive ? "w-[600px] border px-5 h-[10vh]" : "w-[0px]"
-      }  bg-white transition-all`}
+      className={`capture-container ${captureActive ? "capture-active" : ""}`}
     >
       {captureActive && (
         <>
-          <header className="flex items-center justify-between mt-3">
-            <div className="flex gap-5">
-              <Image src={Logo} alt="logoOnCapture" width={50} height={96} />
-              <div id="title" className="flex flex-col gap-1 mt-2">
-                <span className="text-[15px]">کپچر شده ها</span>
-                <span className="text-[12px]">8 کپچر شده</span>
+          <header className="capture-header">
+            <div className="capture-logo-title">
+              <div id="title" className="capture-title">
+                <span className="capture-title-main">کپچر شده ها</span>
+                <span className="capture-title-sub">{sheets.length} کپچر شده</span>
               </div>
             </div>
             <div
-              className="cursor-pointer"
+              className="capture-close-icon"
               onClick={() => {
                 dispatch(RsetCaptureActive(false));
               }}
@@ -39,14 +69,19 @@ const CaptureContainer = () => {
               <X />
             </div>
           </header>
-          <div className="w-full bg-white border-l border-b mr-5 mt-4 pr-9 pl-2 py-4">
+          <div className="capture-filter">
             <CaptureFilter />
           </div>
-          <div
-            id="capturesCards"
-            className="h-[90vh] w-full bg-gray-100 border-l border-b mr-5 pr-9 pl-2 py-4 "
-          >
-            <CaptureCard />
+          <div id="capturesCards" className="capture-cards">
+            {sheets.map((sheet) => (
+              <CaptureCard
+                key={sheet.id}
+                image={sheet.image}
+                date={sheet.date}
+                location={sheet.title}
+                hasVideo={sheet.hasVideo}
+              />
+            ))}
           </div>
         </>
       )}
