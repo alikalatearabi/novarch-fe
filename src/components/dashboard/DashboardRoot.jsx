@@ -14,7 +14,7 @@ import "./dashbaordStyle.css";
 import { Badge } from "@radix-ui/themes";
 
 const DashboardRoot = ({ children }) => {
-  const { setProjectName, projectId, setProjectId } = useProject();
+  const { project, setProject } = useProject();
   const [projects, setProjects] = useState([]);
   const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
 
@@ -42,14 +42,13 @@ const DashboardRoot = ({ children }) => {
 
   // Fetch projects when returning to project list
   useEffect(() => {
-    if (!projectId) {
+    if (!project.id) {
       fetchProjects();
     }
-  }, [projectId, fetchProjects]);
+  }, [project.id, fetchProjects]);
 
-  const handleProjectClick = (project) => {
-    setProjectName(project.name);
-    setProjectId(project.id);
+  const handleProjectClick = (prj) => {
+    setProject({ ...prj })
   };
 
   const handleProjectCreate = () => {
@@ -62,7 +61,7 @@ const DashboardRoot = ({ children }) => {
     }
 
     try {
-      const { ok, data } = await api.project.delete(projectId);
+      const { ok, data } = await api.project.delete(project.id);
 
       if (!ok) {
         throw new Error(data?.message || "Failed to delete the project");
@@ -70,7 +69,7 @@ const DashboardRoot = ({ children }) => {
 
       alert("Project deleted successfully.");
       setProjects((prevProjects) =>
-        prevProjects.filter((project) => project.id !== projectId)
+        prevProjects.filter((prj) => prj.id !== project.id)
       );
     } catch (error) {
       console.error("Error deleting project:", error);
@@ -79,33 +78,33 @@ const DashboardRoot = ({ children }) => {
   };
 
   return (
-    <div className="flex-1 w-full ps-[16px] mr-[200px]" style={{ maxWidth: 'calc(100vw - 200px)' }}>
-          {!projectId ? (
+    <div className="flex-1 w-full ps-[16px] overflow-y-auto" style={{ maxWidth: 'calc(100vw - 200px)' }}>
+          {!project.id ? (
             <div className="projects-container">
               <h2 className="projects-title">پروژه‌های شما</h2>
               <div className="projects-grid">
-                {projects.map((project) => (
+                {projects.map((prj) => (
                   <div
-                    key={project.id}
+                    key={prj.id}
                     className="project-card"
-                    onClick={() => handleProjectClick(project)}
+                    onClick={() => handleProjectClick(prj)}
                   >
                     <div className="project-card-header">
                       <div className="project-icon">
                         <FaFolder />
                       </div>
-                      <h3 className="project-name">{project.name}</h3>
+                      <h3 className="project-name">{prj.name}</h3>
                     </div>
 
                     <Badge size="3" className="bg-[#d1fae5] text-[#065f46] w-fit" >
-                      {project.status || "فعال"}
+                      {prj.status || "فعال"}
                     </Badge>
                     <div className="project-card-footer">
                       <button
                         className="delete-button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleDeleteProject(project.id);
+                          handleDeleteProject(prj.id);
                         }}
                       >
                         <Trash2Icon size={20} className="h-5 w-5 " />
@@ -130,7 +129,7 @@ const DashboardRoot = ({ children }) => {
             />
           )}
 
-          {!projectId && (
+          {!project.id && (
             <div className="fixed bottom-5">
               <button
                 onClick={() => setShowCreateProjectModal(true)}

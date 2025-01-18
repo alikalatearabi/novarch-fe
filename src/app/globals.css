@@ -90,7 +90,9 @@ body {
   /* overflow: hidden; */
 }
 
-
+button {
+  cursor: pointer !important;
+}
 
 /* scrollBar styling  ----------------------------------------*/
 

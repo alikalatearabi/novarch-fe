@@ -10,9 +10,11 @@ import { useSheet } from "@/context/sheetContext";
 
 import "./page.css";
 import PageTransition from "@/components/transitions/PageTransition";
+import { ChevronLeft, HardHat, Plus } from "lucide-react";
+import { Flex, IconButton, Popover, Tooltip } from "@radix-ui/themes";
 
 const Page = () => {
-  const { projectName, projectId, setProjectId } = useProject();
+  const { project, setProject } = useProject();
   const { setLastSheetId } = useSheet();
 
   const [sheets, setSheets] = useState([]);
@@ -21,9 +23,9 @@ const Page = () => {
 
   useEffect(() => {
     const fetchSheets = async () => {
-      if (!projectId) return;
+      if (!project.id) return;
       try {
-        const response = await api.sheets.get(projectId);
+        const response = await api.sheets.get(project.id);
 
         if (!response.ok) {
           throw new Error("Failed to fetch sheets");
@@ -58,7 +60,7 @@ const Page = () => {
     };
 
     fetchSheets();
-  }, [projectId, setLastSheetId]);
+  }, [project.id, setLastSheetId]);
 
   useEffect(() => {
     setRecentSheets(
@@ -92,57 +94,55 @@ const Page = () => {
     <PageTransition id="homeContainer" className="h-full">
       <header
         id="projectTitle"
-        className="mt-5 flex justify-between items-center bg-white pb-5"
+        className="mt-5 flex justify-end items-center bg-white pb-5"
       >
-        <div id="projectName&Address" className="flex flex-col gap-3">
+        {/* <div id="projectName&Address" className="flex flex-col gap-3">
           <span className="text-[25px]" style={{ fontWeight: "bold" }}>
             {projectName || "هیچ پروژه‌ای وجود ندارد"}
           </span>
-        </div>
+        </div> */}
         <div className="flex items-center gap-4" style={{ paddingLeft: "20px" }}>
-          {projectId && (
+          {project.id && (
             <button
               onClick={() => setShowAddSheetModal(true)}
               className="action-button add-button"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 mr-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-              </svg>
               افزودن شیت
+              <Plus />
             </button>
           )}
           <button
-            onClick={() => setProjectId(null)}
+            onClick={() => setProject({ id: null, name: "" })}
             className="action-button back-button"
           >
             بازگشت
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
+            <ChevronLeft />
           </button>
         </div>
       </header>
 
-      <div id="overFlow" className="overflow-y-auto h-[75vh]">
+      <Flex className="w-full" direction="row" gap="2" justify="between" align="center">
+        <div>
+          <div className="text-[25px]" style={{ fontWeight: "bold" }}>
+              {project.name || "هیچ پروژه‌ای وجود ندارد"}
+          </div>
+          <div className="text-sm text-gray-500">
+            {project.address}
+          </div>
+        </div>
+        <Tooltip content="تیم">
+          <IconButton variant="ghost" className="p-2 me-5" >
+            <HardHat size="20" />
+          </IconButton>
+        </Tooltip >
+      </Flex>
+
+      <div id="overFlow" className="overflow-y-auto">
         {sheets.length > 0 ? (
           <>
-            <div id="plansSection" className="mt-10 mr-10 bg-white">
+            <div id="plansSection" className="mt-12 bg-white">
               <header className="flex justify-between items-center">
-                <span className="text-[17px]" style={{ fontWeight: "bold" }}>
+                <span className="text-[17px] font-bold">
                   نقشه‌های فعال
                 </span>
                 <button
@@ -158,9 +158,9 @@ const Page = () => {
                 <HomeSheetCard sheets={sheets} setSheets={setSheets} />
               </div>
             </div>
-            <div id="recentPlansSection" className="mt-10 mr-10 bg-white">
+            <div id="recentPlansSection" className="mt-10 bg-white">
               <header className="flex justify-between items-center">
-                <span className="text-[17px]" style={{ fontWeight: "bold" }}>
+                <span className="text-[17px] font-bold">
                   آخرین تصویر برداری ها
                 </span>
                 <button
@@ -199,7 +199,7 @@ const Page = () => {
         <AddSheetsModal
           onClose={() => setShowAddSheetModal(false)}
           onAddSheet={handleAddSheet}
-          projectId={projectId}
+          projectId={project.id}
         />
       )}
     </PageTransition>

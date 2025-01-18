@@ -20,34 +20,25 @@ import SheetsTimelineRoot from "@/components/sheets/SheetsTimelineRoot";
 import { selectSheetsDetail } from "@/slices/sheetsSlices";
 import { errorMessage } from "@/lib/toast";
 import { twMerge } from "tailwind-merge";
+import { useQuery } from "react-query";
+import { Flex, Spinner } from "@radix-ui/themes";
 
 const Page = () => {
   const sheetsDetail = useSelector(selectSheetsDetail);
+  const { project } = useProject();
 
-  const [data, setData] = useState<GetSheetsOfProjectResponse['responseObject']>([]);
-
-  const { projectId } = useProject();
+  const { data, isLoading } = useQuery({
+    queryKey: ['fetchSheetsOfProject', project.id],
+    queryFn: async () => {
+      const { ok, data } = await api.sheets.get(project.id);
+      return data;
+    }
+  });
 
   const dispatch = useDispatch();
   const sheetsView = useSelector(selectSheetsView);
   const sheetsSize = useSelector(selectSheetsSize);
   const router = useRouter();
-
-  const fetchSheetsOfProject = async (projectId: number) => {
-    if (!projectId) return;
-    try {
-        const { ok, data } = await api.sheets.get(projectId);
-        if (ok) {
-          setData(data.responseObject);
-        }
-    } catch (error) {
-      errorMessage('خطا در بارگزاری تصاویر');
-    }
-  }
-
-  useEffect(() => {
-    fetchSheetsOfProject(projectId);
-  }, [projectId]);
   
   return (
     <div>
@@ -60,7 +51,11 @@ const Page = () => {
             <div
               className={twMerge('h-[60vh] overflow-auto p-3', sheetsView === 0 ? "flex flex-wrap transition-transform gap-2" : "gap-1")}
             >
-              {data.map((sheet, index) => {
+              {isLoading ? (
+                <Flex justify="center" align="center" className="w-full min-h-56">
+                  <Spinner size="3" />
+                </Flex>
+              ) : data?.responseObject.map((sheet, index) => {
                 return (
                   <div className="flex flex-col gap-1" key={index}>
                     <div

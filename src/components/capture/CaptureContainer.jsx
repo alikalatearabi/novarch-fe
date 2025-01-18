@@ -11,7 +11,7 @@ import { useProject } from "@/context/projectContext";
 import "./CaptureContainer.css";
 
 const CaptureContainer = () => {
-  const { projectId } = useProject();
+  const { project } = useProject();
   const dispatch = useDispatch();
   const captureActive = useSelector(selectCaptureActive);
 
@@ -19,9 +19,9 @@ const CaptureContainer = () => {
 
   useEffect(() => {
     const fetchSheets = async () => {
-      if (!projectId) return;
+      if (!project.id) return;
       try {
-        const response = await api.sheets.get(projectId);
+        const response = await api.sheets.get(project.id);
 
         if (!response.ok) {
           throw new Error("Failed to fetch sheets");
@@ -45,7 +45,7 @@ const CaptureContainer = () => {
     };
 
     fetchSheets();
-  }, [projectId]);
+  }, [project.id]);
 
   return (
     <div

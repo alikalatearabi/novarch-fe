@@ -5,6 +5,7 @@ import { toJalaali } from "jalaali-js";
 import UploadVideoModal from "./UploadVideoModal";
 import { useRouter } from "next/navigation";
 import "./HomeSheetCard.css"; 
+import { IconButton } from "@radix-ui/themes";
 
 const HomeSheetCard = ({ sheets, setSheets }) => {
   const [selectedSheet, setSelectedSheet] = useState(null);
@@ -66,15 +67,17 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
             {/* Icons on the left side */}
             <div className="sheet-card-icons">
               {/* Delete Icon */}
-              <button
+              <IconButton
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDelete(sheet.id);
                 }}
-                className="icon-button delete-icon"
+                radius="full"
+                size="3"
+                className="bg-red-100 hover:bg-red-200 text-red-600 transition-colors"
               >
-                <FiTrash2 />
-              </button>
+                <FiTrash2  />
+              </IconButton>
 
               {/* Upload/Edit Button */}
               <button

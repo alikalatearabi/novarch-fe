@@ -1,18 +1,27 @@
 import React, { createContext, useContext, useState } from "react";
 
-const ProjectContext = createContext({
-  projectName: "",
-  setProjectName: (name: string) => {},
-  projectId: null,
-  setProjectId: (id: number | null) => {}
+interface IProject {
+  id: number,
+  name?: string;
+  address?: string;
+}
+
+const ProjectContext = createContext<{ project: IProject; setProject: (data: IProject) => void }>({
+  project: {
+    id: null,
+    name: "",
+    address: ""
+  },
+  setProject: (params) => {},
 });
 
 export const ProjectProvider = ({ children }) => {
-  const [projectName, setProjectName] = useState("");
-  const [projectId, setProjectId] = useState(null);
+  const [project, setProject] = useState<IProject>({
+    id: null,
+  });
 
   return (
-    <ProjectContext.Provider value={{ projectName, setProjectName, projectId, setProjectId }}>
+    <ProjectContext.Provider value={{ project, setProject }}>
       {children}
     </ProjectContext.Provider>
   );

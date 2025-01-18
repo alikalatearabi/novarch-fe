@@ -33,7 +33,7 @@ const Sidebar = (props) => {
 
   return (
     <aside
-      className={twMerge('w-[200px] transition-all 0.2s max-w-xs h-[92vh] fixed z-40 bg-white shadow', props.className)}
+      className={twMerge('w-[200px] transition-all 0.2s max-w-xs h-[92vh] z-40 bg-white shadow', props.className)}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(true)}
       style={{ borderLeft: '1px solid #D8D8D8' }}
@@ -123,7 +123,7 @@ const Sidebar = (props) => {
                   </Button>
                 </Fragment>
               </PopoverTrigger>
-              {/* <div className="mb-2 w-56 p-3 border bg-white rounded shadow-md">
+              {/* <div className="mb-2 p-3 border bg-white m-2 rounded ">
                 <div className="space-y-1">
                   <Link href="/">
                     <SidebarButton size="sm" icon={Settings} className="w-full" iconActive={isActive}>
