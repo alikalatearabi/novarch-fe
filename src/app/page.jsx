@@ -141,21 +141,37 @@ const Page = () => {
         {sheets.length > 0 ? (
           <>
             <div id="plansSection" className="mt-10 mr-10 bg-white">
-              <header className="flex justify-between">
+              <header className="flex justify-between items-center">
                 <span className="text-[17px]" style={{ fontWeight: "bold" }}>
                   نقشه‌های فعال
                 </span>
+                <button
+                  className="view-all-button"
+                  onClick={() => {
+                    alert("مشاهده همه شیت‌ها clicked!");
+                  }}
+                >
+                  مشاهده همه شیت‌ها
+                </button>
               </header>
               <div id="plans" className="plans-container">
                 <HomeSheetCard sheets={sheets} setSheets={setSheets} />
               </div>
             </div>
-
             <div id="recentPlansSection" className="mt-10 mr-10 bg-white">
-              <header className="flex justify-between">
+              <header className="flex justify-between items-center">
                 <span className="text-[17px]" style={{ fontWeight: "bold" }}>
                   نقشه‌های اخیر
                 </span>
+                <button
+                  className="view-all-button"
+                  onClick={() => {
+                    // Placeholder for view all action
+                    alert("مشاهده همه تصویربرداری ها");
+                  }}
+                >
+                  مشاهده همه تصویربرداری ها
+                </button>
               </header>
               <div id="recentPlans" className="plans-container">
                 <RecentSheetCard sheets={recentSheets} setSheets={setSheets} />

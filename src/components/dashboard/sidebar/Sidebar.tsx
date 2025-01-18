@@ -19,7 +19,7 @@ const Sidebar = (props) => {
   const { width } = useWindowSize();
 
   const isMobile = useMemo(() => width < 576, [width]);
-  
+
   const dispatch = useDispatch();
   const [isExpanded, setIsExpanded] = useState(true);
   const pathname = usePathname();
@@ -36,7 +36,7 @@ const Sidebar = (props) => {
       className={twMerge('w-[200px] transition-all 0.2s max-w-xs h-[92vh] fixed z-40 bg-white shadow', props.className)}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(true)}
-      style={{borderLeft: '1px solid #D8D8D8'}}
+      style={{ borderLeft: '1px solid #D8D8D8' }}
     >
       <div className="h-full relative">
         <div className={`${true ? "pt-10" : "pt-3"}`}>
@@ -90,7 +90,7 @@ const Sidebar = (props) => {
                   </SidebarButton>
                 </div>
                 <div id="feildNote">
-                  <SidebarButton icon={NotebookPen} className={`${buttonClass} `}>
+                  <SidebarButton icon={NotebookPen} className={`${buttonClass} `} iconActive={false}>
                     <div
                       className={`flex justify-start${isExpanded ? "block opacity-100 transition-opacity 0.3s" : "transition-opacity 0.1s ease opacity-0 "
                         }`}
@@ -124,12 +124,11 @@ const Sidebar = (props) => {
               </PopoverTrigger>
               <PopoverContent className="mb-2 w-56 p-3 ">
                 <div className="space-y-1">
-                  <Link to="/">
+                  <Link href="/">
                     <SidebarButton size="sm" icon={Settings} className="w-full" iconActive={isActive}>
                       تنظیمات
                     </SidebarButton>
                   </Link>
-
                   <Button
                     size="sm"
                     className="w-full bg-red-500 hover:bg-red-400"
