@@ -113,7 +113,8 @@ const Sidebar = (props) => {
                       <div className="flex items-center gap-2">
                         <HardHat />
                         <span
-                          className={`${isExpanded ? "block opacity-100 transition-opacity 0.3s" : "transition-opacity 0.1s ease opacity-0 "}`}
+                          className={`${isExpanded ? "block opacity-100 transition-opacity 0.3s" : "transition-opacity 0.1s ease opacity-0 "
+                            }`}
                         >
                           تیم
                         </span>
@@ -122,25 +123,21 @@ const Sidebar = (props) => {
                   </Button>
                 </Fragment>
               </PopoverTrigger>
-              <PopoverContent className="mb-2 w-56 p-3 ">
+              {/* <div className="mb-2 w-56 p-3 border bg-white rounded shadow-md">
                 <div className="space-y-1">
                   <Link href="/">
                     <SidebarButton size="sm" icon={Settings} className="w-full" iconActive={isActive}>
                       تنظیمات
                     </SidebarButton>
                   </Link>
-                  <Button
-                    size="sm"
-                    className="w-full bg-red-500 hover:bg-red-400"
-                    onClick={auth.signout}
-                  >
+                  <Button size="sm" className="w-full bg-red-500 hover:bg-red-400" onClick={auth.signout}>
                     <span>
                       <LogOut />
                     </span>
                     <span>خروج</span>
                   </Button>
                 </div>
-              </PopoverContent>
+              </div> */}
             </Popover>
           </div>
         </div>

@@ -161,7 +161,7 @@ const Page = () => {
             <div id="recentPlansSection" className="mt-10 mr-10 bg-white">
               <header className="flex justify-between items-center">
                 <span className="text-[17px]" style={{ fontWeight: "bold" }}>
-                  نقشه‌های اخیر
+                  آخرین تصویر برداری ها
                 </span>
                 <button
                   className="view-all-button"

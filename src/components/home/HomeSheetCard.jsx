@@ -4,7 +4,7 @@ import { FiTrash2, FiUpload, FiEdit } from "react-icons/fi";
 import { toJalaali } from "jalaali-js";
 import UploadVideoModal from "./UploadVideoModal";
 import { useRouter } from "next/navigation";
-import "./HomeSheetCard.css"; // Import the CSS file
+import "./HomeSheetCard.css"; 
 
 const HomeSheetCard = ({ sheets, setSheets }) => {
   const [selectedSheet, setSelectedSheet] = useState(null);

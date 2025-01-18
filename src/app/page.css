@@ -103,12 +103,13 @@
   border-radius: 48px;
   padding: 8px 16px;
   font-size: 14px;
-  font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s ease;
   border: none;
 }
 
 .view-all-button:hover {
-  background-color: rgb(223, 235, 250); 
+  background-color: rgb(223, 235, 250);
+  box-shadow: none !important;
+  transform: none !important;
 }

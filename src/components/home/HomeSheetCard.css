@@ -11,7 +11,7 @@
     gap: 1.25rem;
     align-items: center;
     padding: 1rem 1rem;
-    width: 400px;
+    width: 360px;
     border-radius: 1.5rem;
     background-color: white;
     cursor: pointer;
@@ -43,8 +43,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 2rem;
-    height: 2rem;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease-in-out;
@@ -88,23 +86,27 @@
   /* Image styles */
   .sheet-image {
     border-radius: 1rem;
+    height: 80px;
+    width: 130px;
   }
   
   /* Sheet details */
   .sheet-details {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    flex-grow: 1;
+    gap: 0.2rem;
+    width: 30%;
   }
   
   .sheet-title {
-    font-size: 0.9375rem;
+    font-size: 13px;
     font-weight: bold;
   }
   
   .sheet-date {
+    padding-right: 0 !important;
+    margin-top: 0 !important;
     font-size: 0.9rem;
-    color: rgb(115, 115, 115); /* Gray-500 */
+    color: rgb(115, 115, 115);
   }
   
