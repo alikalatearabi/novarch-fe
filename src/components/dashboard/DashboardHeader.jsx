@@ -59,9 +59,6 @@ const DashboardHeader = () => {
         </div>
       </div>
       <div id="userProfile" className="flex-1 flex justify-end items-center gap-5 px-10 cursor-pointer">
-        <div className="mr-4">
-
-        </div>
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center gap-5">
             <div id="userAvatar" className="bg-gray-300 p-2 rounded-full">
