@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
 
-const DashboardHeader = ({ projectName }) => {
+const DashboardHeader = () => {
   const auth = useAuth();
 
   return (

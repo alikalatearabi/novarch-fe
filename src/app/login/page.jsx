@@ -1,8 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import TextField from "@/components/ui/TextField";
+import { Button } from "@/components/ui/button";
 
 const LoginPage = () => {
   const auth = useAuth();
@@ -62,7 +65,7 @@ const LoginPage = () => {
           <img
             src="/images/logo.jpg"
             alt="Logo"
-            className="w-45 h-32 rounded-lg"
+            className="w-45 rounded-lg"
             style={{borderRadius: '20px'}}
           />
         </div>
@@ -71,37 +74,28 @@ const LoginPage = () => {
           <label htmlFor="email" className="block text-gray-700 mb-2 mr-1">
             ایمیل
           </label>
-          <input
+          <TextField
             type="email"
             id="email"
             value={email}
+            size="3"
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
         <div className="mb-6">
           <label htmlFor="password" className="block text-gray-700 mb-2 mr-1">
             رمز عبور
           </label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
+          <TextField type="password" value={password} onChange={(e) => setPassword(e.target.value)} size="3" />
         </div>
-        <button
+        <Button
           type="submit"
           disabled={loading}
-          className={`w-full py-2 text-white rounded-lg ${
-            loading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-blue-500 hover:bg-blue-600"
-          }`}
+          className="w-full bg-blue-500 hover:bg-blue-600"
+          loading={loading}
         >
           {loading ? "در حال ورود" : "ورود"}
-        </button>
+        </Button>
       </form>
     </div>
   );

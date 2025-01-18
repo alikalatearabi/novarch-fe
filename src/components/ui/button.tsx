@@ -3,9 +3,10 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/utils"
+import { Spinner } from "@radix-ui/themes";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -37,17 +38,21 @@ interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   variant?: any;
   size?: any;
   asChild?: boolean;
+  loading?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ className, variant, size, asChild = false, children, ...props }, ref) => {
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ className, variant, size, asChild = false, children, loading, ...props }, ref) => {
   const Comp = asChild ? Slot : "button"
   return (
     (<Comp
-      className={cn(buttonVariants({ variant, size, className }), 'cursor-pointer')}
+      className={cn(buttonVariants({ variant, size }), className, 'cursor-pointer', loading
+        ? "bg-gray-400 cursor-not-allowed"
+        : "")}
       ref={ref}
-      {...props} >
-        {children}
-      </Comp>)
+      {...props}>
+      {loading && <Spinner />}
+      {children}
+    </Comp>)
   );
 })
 Button.displayName = "Button"

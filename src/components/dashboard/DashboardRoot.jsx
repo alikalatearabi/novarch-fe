@@ -3,15 +3,18 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Sidebar from "@/components/dashboard/sidebar/Sidebar";
 import DashboardHeader from "./DashboardHeader";
-import CaptureRoot from "../capture/CaptureRoot";
+import CaptureContainer from "../capture/CaptureContainer";
 import CreateProjectModal from "./CreateProjectModal";
 import { useProject } from "../../context/projectContext";
 import { api } from "@/api";
-import "./dashbaordStyle.css";
 import { FaFolder } from "react-icons/fa";
+import { Trash2Icon } from "lucide-react";
+
+import "./dashbaordStyle.css";
+import { Badge } from "@radix-ui/themes";
 
 const DashboardRoot = ({ children }) => {
-  const { projectName, setProjectName, projectId, setProjectId } = useProject();
+  const { setProjectName, projectId, setProjectId } = useProject();
   const [projects, setProjects] = useState([]);
   const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
 
@@ -76,11 +79,7 @@ const DashboardRoot = ({ children }) => {
   };
 
   return (
-    <div id="root-container" className="w-full">
-      <DashboardHeader projectName={projectName} />
-      <div className="flex flex-row h-[92vh] w-full">
-        <Sidebar />
-        <div className="flex-1 w-full ps-[16px] mr-[200px]" style={{ maxWidth: 'calc(100vw - 200px)' }}>
+    <div className="flex-1 w-full ps-[16px] mr-[200px]" style={{ maxWidth: 'calc(100vw - 200px)' }}>
           {!projectId ? (
             <div className="projects-container">
               <h2 className="projects-title">پروژه‌های شما</h2>
@@ -98,9 +97,9 @@ const DashboardRoot = ({ children }) => {
                       <h3 className="project-name">{project.name}</h3>
                     </div>
 
-                    <div className="project-status">
+                    <Badge size="3" className="bg-[#d1fae5] text-[#065f46] w-fit" >
                       {project.status || "فعال"}
-                    </div>
+                    </Badge>
                     <div className="project-card-footer">
                       <button
                         className="delete-button"
@@ -109,20 +108,7 @@ const DashboardRoot = ({ children }) => {
                           handleDeleteProject(project.id);
                         }}
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M4 7h16M10 3h4m-4 0a1 1 0 00-1 1v1h6V4a1 1 0 00-1-1m-4 0h4"
-                          />
-                        </svg>
+                        <Trash2Icon size={20} className="h-5 w-5 " />
                       </button>
                     </div>
                   </div>
@@ -134,7 +120,7 @@ const DashboardRoot = ({ children }) => {
           )}
 
           <div id="capture" className="absolute top-0 right-0 z-30">
-            <CaptureRoot />
+            <CaptureContainer />
           </div>
 
           {showCreateProjectModal && (
@@ -155,9 +141,7 @@ const DashboardRoot = ({ children }) => {
             </div>
           )}
         </div>
-      </div>
-    </div>
-  );
+  )
 };
 
 export default DashboardRoot;

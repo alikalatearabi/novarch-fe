@@ -1,11 +1,14 @@
 import React from "react"
 import ProtectedRoute from "@/components/ProtectedRoute"
+import PageTransition from "@/components/transitions/PageTransition";
 
 const SheetsLayout = ({ children }) => {
     return (
-        <ProtectedRoute>
-            {children}
-        </ProtectedRoute>
+        <PageTransition>
+            <ProtectedRoute>
+                {children}
+            </ProtectedRoute>
+        </PageTransition>
     );
 }
 

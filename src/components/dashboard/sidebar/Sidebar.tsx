@@ -1,30 +1,39 @@
 "use client";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useMemo, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { HardHat, LogOut, MoreHorizontal, NotebookPen, ScanEye, Settings } from "lucide-react";
+import { HardHat, LogOut, NotebookPen, ScanEye, Settings } from "lucide-react";
 import SidebarButton from "./SidebarButton";
 import { usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { RsetCaptureActive, selectCaptureActive } from "@/slices/captureSlices";
 import { useAuth } from "@/context/AuthContext";
+import { twMerge } from "tailwind-merge";
+import { useWindowSize } from "usehooks-ts";
 
-const SidebarDesktop = (props) => {
+import { sidebarItems } from "@/apiServices/data";
+
+const Sidebar = (props) => {
   const auth = useAuth();
+  const { width } = useWindowSize();
 
+  const isMobile = useMemo(() => width < 576, [width]);
+  
   const dispatch = useDispatch();
   const [isExpanded, setIsExpanded] = useState(true);
   const pathname = usePathname();
   const captureActive = useSelector(selectCaptureActive);
 
   let isActive;
-  const buttonClass = `w-full flex justify-between gap-4 rounded-none hover:text-blue-500 ${false ? "bg-gradient-to-r bg-blue-200 text-black hover:bg-blue-200 " : ""
-    }`;
+  const buttonClass = twMerge(
+    'w-full flex justify-between gap-4 rounded-none hover:text-blue-500',
+    false ? "bg-gradient-to-r bg-blue-200 text-black hover:bg-blue-200 " : ""
+  )
 
   return (
     <aside
-      className={`w-[200px] transition-all 0.2s max-w-xs h-[92vh] fixed z-40 bg-white shadow ${props.className}`}
+      className={twMerge('w-[200px] transition-all 0.2s max-w-xs h-[92vh] fixed z-40 bg-white shadow', props.className)}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(true)}
       style={{borderLeft: '1px solid #D8D8D8'}}
@@ -33,8 +42,8 @@ const SidebarDesktop = (props) => {
         <div className={`${true ? "pt-10" : "pt-3"}`}>
           {true && (
             <div className="flex flex-col gap-3 w-full">
-              {props.sidebarItems.links.map((item, index) => {
-                isActive = pathname === item.href;
+              {sidebarItems.links.map((item, index) => {
+                isActive = pathname === '/' ? item.href === pathname : item.href.startsWith(pathname);
                 return (
                   <Fragment key={index}>
                     {(index === 4 || index === 6) && <hr className="mx-2 mb-3" />}
@@ -141,4 +150,4 @@ const SidebarDesktop = (props) => {
   );
 };
 
-export default SidebarDesktop;
+export default Sidebar;

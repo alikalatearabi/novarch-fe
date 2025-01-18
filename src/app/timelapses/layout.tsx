@@ -1,11 +1,14 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
+import PageTransition from "@/components/transitions/PageTransition";
 import React from "react";
 
-const TimelapsLayout = ({ children  }) => {
+const TimelapsLayout = ({ children }) => {
   return (
-    <ProtectedRoute>
-      {children}
-    </ProtectedRoute>
+    <PageTransition>
+      <ProtectedRoute>
+        {children}
+      </ProtectedRoute>
+    </PageTransition>
   );
 };
 

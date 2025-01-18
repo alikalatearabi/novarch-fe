@@ -1,75 +1,77 @@
 /* Styles for CaptureCard */
 
 .capture-card-container {
-    display: flex;
-    background-color: white;
-    border: 1px solid #e5e7eb; 
-    width: 100%;
-  }
-  
-  .capture-card-image {
-    border: 1px solid #D8D8D8;
-    padding: 1.25rem 0;
-    width: 40%;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .capture-card-image-element {
-    width: 100%;
-    border-top: 1px solid #D8D8D8;
-    border-bottom: 1px solid #D8D8D8;
-  }
-  
-  .capture-card-details {
-    padding: 0.5rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    width: 60%;
-  }
-  
-  .capture-card-date {
-    color: #6b7280; 
-    font-size: 15px;
-  }
-  
-  .capture-card-location {
-    color: #6b7280; 
-    font-size: 12px;
-  }
-  
-  .capture-card-type {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 5px;
-  }
-  
-  .capture-card-type-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    border: 1px solid #10b981; /* green-500 */
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.75rem;
-    background-color: #d1fae5; /* green-100 */
-    color: #047857; /* green-700 */
-    font-size: 12px;
-    margin-top: 0.25rem;
-  }
-  
-  .capture-card-type-icon {
-    transform: rotate(180deg);
-    width: 1rem;
-    height: 1rem;
-  }
-  
-  .capture-card-type-text {
-    font-weight: bold;
-  }
-  
-  .capture-card-separator {
-    width: 60%;
-  }
-  
+  display: flex;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  width: 100%;
+}
+
+.capture-card-image {
+  border: 1px solid #D8D8D8;
+  padding: 1.25rem 0;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+}
+
+.capture-card-image-element {
+  width: 100%;
+  border-top: 1px solid #D8D8D8;
+  border-bottom: 1px solid #D8D8D8;
+}
+
+.capture-card-details {
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 60%;
+}
+
+.capture-card-date {
+  color: #6b7280;
+  font-size: 15px;
+}
+
+.capture-card-location {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.capture-card-type {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.capture-card-type-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #10b981;
+  /* green-500 */
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.75rem;
+  background-color: #d1fae5;
+  /* green-100 */
+  color: #047857;
+  /* green-700 */
+  font-size: 12px;
+  margin-top: 0.25rem;
+}
+
+.capture-card-type-icon {
+  transform: rotate(180deg);
+  width: 1rem;
+  height: 1rem;
+}
+
+.capture-card-type-text {
+  font-weight: bold;
+}
+
+.capture-card-separator {
+  width: 60%;
+}

@@ -9,6 +9,7 @@ import RecentSheetCard from "@/components/home/RecentSheetCard";
 import { useSheet } from "@/context/sheetContext";
 
 import "./page.css";
+import PageTransition from "@/components/transitions/PageTransition";
 
 const Page = () => {
   const { projectName, projectId, setProjectId } = useProject();
@@ -88,7 +89,7 @@ const Page = () => {
   };
 
   return (
-    <div id="homeContainer" className="h-full">
+    <PageTransition id="homeContainer" className="h-full">
       <header
         id="projectTitle"
         className="mt-5 flex justify-between items-center bg-white pb-5"
@@ -185,7 +186,7 @@ const Page = () => {
           projectId={projectId}
         />
       )}
-    </div>
+    </PageTransition>
   );
 };
 

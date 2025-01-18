@@ -5,9 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { RsetCaptureActive, selectCaptureActive } from "@/slices/captureSlices";
 import CaptureFilter from "./CaptureFilter";
 import CaptureCard from "./CaptureCard";
-import "./CaptureContainer.css";
 import { api } from "@/api";
 import { useProject } from "@/context/projectContext";
+
+import "./CaptureContainer.css";
 
 const CaptureContainer = () => {
   const { projectId } = useProject();

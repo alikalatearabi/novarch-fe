@@ -24,7 +24,6 @@ const selectSortData = [
 const TimelapsHeader = () => {
   const dispatch = useDispatch();
   const timelapsSortAsc = useSelector(selectTimelapsSortAsc);
-  console.log(timelapsSortAsc);
 
   return (
     <div id="headerContainer" className="px-6 py-5">
@@ -44,7 +43,6 @@ const TimelapsHeader = () => {
           className="border rounded-lg p-2 cursor-pointer transition-all bg-white hover:bg-gray-100"
           onClick={() => {
             dispatch(RsetTimelapsSortAsc(!timelapsSortAsc));
-            console.log(timelapsSortAsc);
           }}
         >
           {timelapsSortAsc ? <SortAsc color="black" /> : <SortDesc color="black" />}

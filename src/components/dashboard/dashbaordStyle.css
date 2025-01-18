@@ -74,21 +74,6 @@
     color: #1f2937;
   }
   
-  /* Status Badge */
-  .project-status {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20%;
-    background-color: #d1fae5;
-    color: #065f46;
-    font-size: 0.875rem;
-    font-weight: 500;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.375rem;
-    margin-top: 0.5rem;
-  }
-  
   /* Description */
   .project-description {
     font-size: 0.875rem;

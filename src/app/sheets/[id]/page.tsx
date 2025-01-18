@@ -44,6 +44,7 @@ const Page = ({ params }) => {
                                         className="bg-transparent border hover:bg-gray-100"
                                         onClick={() => {
                                             dispatch(RsetSheetsDetail(false));
+                                            route.push('/sheets');
                                         }}
                                     >
                                         <X color="black" />

@@ -115,7 +115,7 @@ const SheetsTimeline = ({ selectedYear, selectedDate, events, onDateSelect }) =>
                     {dayData.show && (
                       <div className="border-b border-black rotate-90 mb-1 w-2 p-1"></div>
                     )}
-                    <div className="w-4">{dayData.show && dayData.day}</div>
+                    <div className="w-4" style={{ whiteSpace: 'nowrap' }}>{dayData.show && dayData.day}</div>
                     {dayData.hasEvent && (
                       <Fragment>
                         <div
