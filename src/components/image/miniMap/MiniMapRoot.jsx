@@ -1,25 +1,26 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import MiniMapDetailController from "./MiniMapDetailController";
-import { useSelector } from "react-redux";
-import { selectImageExpandMinimap } from "@/slices/imageSlices";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Expand, Minimize } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import "./MiniMap.css";
 import { api } from "@/api";
-import './MiniMap.css';
 
 const MiniMapRoot = ({ sheetId, setCurrentImage, imageData }) => {
-  const imageExpandMinimap = useSelector(selectImageExpandMinimap);
   const [sheetData, setSheetData] = useState(null);
-
-  // Mock dots data
-  const [dots, setDots] = useState([
-    { x: 20, y: 30, frame: "47/frame_0001.jpg" },
-    { x: 50, y: 60, frame: "47/frame_0002.jpg" },
-    { x: 80, y: 90, frame: "47/frame_0010.jpg" },
-  ]);
-
-  // State to track the active dot
+  const [dots, setDots] = useState([]); // Start with an empty array
   const [activeDot, setActiveDot] = useState(null);
+  const [selectedSheet, setSelectedSheet] = useState("");
+  const [imageExpandMinimap, setImageExpandMinimap] = useState(false);
+  const [imageDimensions, setImageDimensions] = useState({
+    naturalWidth: 1, // Prevent division by 0
+    naturalHeight: 1,
+    renderedWidth: 250,
+    renderedHeight: 150,
+  });
+
+  const imageRef = useRef(null);
 
   useEffect(() => {
     const fetchSheet = async () => {
@@ -34,6 +35,18 @@ const MiniMapRoot = ({ sheetId, setCurrentImage, imageData }) => {
         const { data } = response;
         if (data.success) {
           setSheetData(data);
+
+          // Process the coordinates field into an array of dots
+          const coordinates = data.responseObject.coordinates || {};
+          const formattedDots = Object.entries(coordinates).map(([frame, coord]) => ({
+            frame: `${sheetId}/${frame}.jpg`,
+            x: coord.x,
+            y: coord.y,
+          }));
+
+          // Set the dots and log them for verification
+          setDots(formattedDots);
+          console.log("Formatted Dots:", formattedDots);
         }
       } catch (error) {
         console.error("Error fetching sheets:", error);
@@ -43,12 +56,21 @@ const MiniMapRoot = ({ sheetId, setCurrentImage, imageData }) => {
     fetchSheet();
   }, [sheetId]);
 
-  // Update the active dot when currentImage changes
   useEffect(() => {
     if (imageData && activeDot !== null && imageData[activeDot]) {
       setCurrentImage(imageData[activeDot]);
     }
   }, [activeDot, imageData, setCurrentImage]);
+
+  useEffect(() => {
+    if (imageRef.current) {
+      const { naturalWidth, naturalHeight } = imageRef.current;
+      console.log(imageRef.current)
+      const renderedWidth = imageExpandMinimap ? 600 : 250;
+      const renderedHeight = imageExpandMinimap ? 300 : 150;
+      setImageDimensions({ naturalWidth, naturalHeight, renderedWidth, renderedHeight });
+    }
+  }, [imageExpandMinimap]);
 
   const handleDotClick = (frame) => {
     setActiveDot(frame);
@@ -57,11 +79,43 @@ const MiniMapRoot = ({ sheetId, setCurrentImage, imageData }) => {
   return (
     <div
       id="miniMapRootContainer"
-      className={`${
-        imageExpandMinimap ? "w-[600px] h-[300px]" : "w-[250px] h-[150px]"
-      } bg-white shadow-lg transition-all 0.9s ease-out relative`}
+      className={`bg-white shadow-lg transition-all 0.9s ease-out relative`}
     >
-      <MiniMapDetailController />
+      {/* Header with Dropdown and Buttons */}
+      <div id="container" className="flex border-b items-center gap-2">
+        <div id="selectSheets">
+          <Select dir="rtl" onValueChange={setSelectedSheet}>
+            <SelectTrigger className={`${imageExpandMinimap ? "w-[450px]" : "w-[150px]"} rounded-none`}>
+              <SelectValue placeholder="Sheets" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="roof">پشت بام</SelectItem>
+              <SelectItem value="floor1">طبقه اول</SelectItem>
+              <SelectItem value="floor2">طبقه دوم</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div id="expandContainer" className="flex justify-around w-full">
+          <Button
+            id="expand"
+            className="cursor-pointer bg-transparent hover:bg-transparent"
+            onClick={() => setImageExpandMinimap(true)} // Update local state
+            disabled={imageExpandMinimap}
+          >
+            <Expand className="w-4 h-4" color="black" />
+          </Button>
+          <Button
+            id="minimize"
+            className="cursor-pointer bg-transparent hover:bg-transparent"
+            onClick={() => setImageExpandMinimap(false)} // Update local state
+            disabled={!imageExpandMinimap}
+          >
+            <Minimize className="w-4 h-4" color="black" />
+          </Button>
+        </div>
+      </div>
+
+      {/* Image and Dots */}
       <div id="planImage" className="h-full flex items-center justify-center border relative">
         {sheetData ? (
           <>
@@ -69,39 +123,42 @@ const MiniMapRoot = ({ sheetId, setCurrentImage, imageData }) => {
               src={`https://files.novaarchai.com/${sheetData.responseObject.imagePath}`}
               alt={sheetData.name || "MiniMap"}
               className="my-auto cursor-pointer"
-              width={imageExpandMinimap ? 600 : 250}
-              height={imageExpandMinimap ? 300 : 150}
+              width={imageDimensions.renderedWidth}
+              height={imageDimensions.renderedHeight}
+              ref={imageRef}
+              onLoad={(e) => {
+                const img = e.target;
+                setImageDimensions((prev) => ({
+                  ...prev,
+                  naturalWidth: img.naturalWidth,
+                  naturalHeight: img.naturalHeight,
+                }));
+              }}
             />
-            {/* Render dots */}
-            {dots.map((dot, index) => (
-              <div
-                key={index}
-                className={`absolute rounded-full transition-all duration-300 ${
-                  activeDot === dot.frame ? "bg-blue-600" : "bg-blue-400"
-                }`}
-                style={{
-                  width: imageExpandMinimap
-                    ? activeDot === dot.frame
-                      ? "50px"
-                      : "15px"
-                    : activeDot === dot.frame
-                    ? "30px"
-                    : "8px",
-                  height: imageExpandMinimap
-                    ? activeDot === dot.frame
-                      ? "50px"
-                      : "15px"
-                    : activeDot === dot.frame
-                    ? "30px"
-                    : "8px",
-                  top: `${dot.y}%`,
-                  left: `${dot.x}%`,
-                  transform: "translate(-50%, -50%)",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleDotClick(dot.frame)}
-              ></div>
-            ))}
+            {dots.map((dot, index) => {
+              const scaledX =
+                (dot.x / 2100) * imageDimensions.renderedWidth;
+              const scaledY =
+                (dot.y / (imageExpandMinimap ? 1050 : 1200)) * imageDimensions.renderedHeight;
+
+              return (
+                <div
+                  key={index}
+                  className={`absolute rounded-full transition-all duration-300 ${
+                    activeDot === dot.frame ? "bg-blue-600" : "bg-blue-400"
+                  }`}
+                  style={{
+                    width: imageExpandMinimap ? (activeDot === dot.frame ? "50px" : "15px") : activeDot === dot.frame ? "30px" : "8px",
+                    height: imageExpandMinimap ? (activeDot === dot.frame ? "50px" : "15px") : activeDot === dot.frame ? "30px" : "8px",
+                    top: `${scaledY}px`,
+                    left: `${scaledX}px`,
+                    transform: "translate(-50%, -50%)",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleDotClick(dot.frame)}
+                ></div>
+              );
+            })}
           </>
         ) : (
           <p>Loading...</p>
