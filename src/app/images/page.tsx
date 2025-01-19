@@ -12,7 +12,7 @@ const ImageRoot = () => {
   const searchParams = useSearchParams();
   const sheetIdFromURL = searchParams.get("sheetId"); // Get sheetId from the URL
   const { lastSheetId } = useSheet(); // Access lastSheetId from context
-  
+
   const sheetId = useMemo(() => sheetIdFromURL || lastSheetId, [sheetIdFromURL, lastSheetId]); // Fallback to lastSheetId if URL param is missing
   const [imageData, setImageData] = useState({});
   const [currentImage, setCurrentImage] = useState(null);
@@ -30,6 +30,7 @@ const ImageRoot = () => {
         if (result.success) {
           const frames = result.responseObject.frames;
           const uploadedtime = result.responseObject.uploadedAt;
+
           const data = frames.reduce((acc, frame, index) => {
             acc[frame.name] = {
               imageUrl: `https://files.novaarchai.com/${frame.url}`,
@@ -87,7 +88,7 @@ const ImageRoot = () => {
       </div>
 
       <div id="miniMap" className="absolute top-3 left-3 z-10">
-        <MiniMapRoot sheetId={sheetId} />
+        <MiniMapRoot sheetId={sheetId} setCurrentImage={setCurrentImage} imageData={imageData} />
       </div>
     </div>
   );
