@@ -78,7 +78,7 @@ const DashboardRoot = ({ children }) => {
   };
 
   return (
-    <div className="flex-1 w-full ps-[16px] overflow-y-auto" style={{ maxWidth: 'calc(100vw - 200px)' }}>
+    <div className="flex-1 w-full px-4 overflow-y-auto" style={{ maxWidth: 'calc(100vw - 200px)' }}>
           {!project.id ? (
             <div className="projects-container">
               <h2 className="projects-title">پروژه‌های شما</h2>

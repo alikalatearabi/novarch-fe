@@ -1,8 +1,13 @@
+'use client';
+
 import TimelapsHeader from "@/app/timelapses/_components/TimelapsHeader";
 
 import React from "react";
 import Image from "next/image";
 import { EllipsisVertical, Lock, MapPin, Unlock } from "lucide-react";
+import ListComponent from "@/components/List";
+import { useQuery } from "react-query";
+import { sleep } from "@/utils/sleep";
 
 const timelapsData = [
   {
@@ -71,14 +76,25 @@ const timelapsData = [
   },
 ];
 
-const page = () => {
+const Page = () => {
+  const { data, isLoading } = useQuery({
+    queryKey: ['fetchTimelapsData'],
+    queryFn: async () => {
+      await sleep(100*Math.random() + 500);
+      return timelapsData;
+    }
+  });
+
   return (
     <div id="rootContainer">
       <TimelapsHeader />
-      <div id="container" className="mr-4 mt-5 flex flex-wrap gap-10 p-3 rounded-2xl cursor-pointer">
-        {timelapsData.map((item, index) => {
-          return (
-            <div key={index} id="cardContainer" className="hover:shadow-md  p-3 rounded-2xl cursor-pointer">
+      <div id="container" className="mr-4 mt-5 p-3">
+        <ListComponent
+          dataSource={data}
+          loading={isLoading}
+          gap={40}
+          renderItem={(item, index) => (
+            <div key={index} id="cardContainer" className="hover:shadow-md transition-shadow p-3 rounded-2xl cursor-pointer">
               <div id="imageContainer" className="relative">
                 <Image
                   src={item.imageUrl}
@@ -131,11 +147,11 @@ const page = () => {
                 </div>
               </div>
             </div>
-          );
-        })}
+          )}
+          />
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;

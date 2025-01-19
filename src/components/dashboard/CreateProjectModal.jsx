@@ -4,6 +4,7 @@ import { api } from "@/api";
 
 const CreateProjectModal = ({ onClose, onCreate }) => {
   const [projectName, setProjectName] = useState("");
+  const [projectAddress, setProjectAddress] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -17,7 +18,7 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
     setError("");
 
     try {
-      const { ok, data } = await api.project.create({ name: projectName });
+      const { ok, data } = await api.project.create({ name: projectName, address: projectAddress });
 
       if (!ok) {
         const errorResponse = await response.json();
@@ -43,6 +44,13 @@ const CreateProjectModal = ({ onClose, onCreate }) => {
           placeholder="نام پروژه"
           value={projectName}
           onChange={(e) => setProjectName(e.target.value)}
+          className="w-full p-2 mb-4 border rounded"
+        />
+        <textarea
+          type="text"
+          placeholder="آدرس پروژه"
+          value={projectAddress}
+          onChange={(e) => setProjectAddress(e.target.value)}
           className="w-full p-2 border rounded"
         />
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}

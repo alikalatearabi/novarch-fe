@@ -43,7 +43,7 @@ const Sidebar = (props) => {
           {true && (
             <div className="flex flex-col gap-3 w-full">
               {sidebarItems.links.map((item, index) => {
-                isActive = pathname === '/' ? item.href === pathname : item.href.startsWith(pathname);
+                isActive = item.href === '/' ? item.href === pathname : pathname.startsWith(item.href);
                 return (
                   <Fragment key={index}>
                     {(index === 4 || index === 6) && <hr className="mx-2 mb-3" />}
