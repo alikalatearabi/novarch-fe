@@ -5,9 +5,16 @@ import * as THREE from "three";
 
 const VirtualTour = ({ currentImage }) => {
   const [texture, setTexture] = useState(null);
+  const [imageName, setImageName] = useState("");
 
   useEffect(() => {
     if (currentImage) {
+      // Extract the image name from the URL
+      const imageUrlParts = currentImage.imageUrl.split("/");
+      const name = imageUrlParts[imageUrlParts.length - 1]; // Extract last part of the URL
+      setImageName(name);
+
+      // Load the texture
       const textureLoader = new THREE.TextureLoader();
       textureLoader.load(currentImage.imageUrl, (loadedTexture) => {
         loadedTexture.wrapS = THREE.RepeatWrapping;
@@ -35,6 +42,23 @@ const VirtualTour = ({ currentImage }) => {
         pointerEvents: "none",
       }}
     >
+      {/* Display the image name as an overlay */}
+      <div
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "210px",
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
+          color: "#fff",
+          padding: "5px 10px",
+          borderRadius: "5px",
+          zIndex: 2,
+        }}
+      >
+        {imageName}
+      </div>
+
+      {/* Panorama rendering */}
       <Canvas style={{ height: "100vh", pointerEvents: "auto" }}>
         <OrbitControls
           enableZoom={true}
