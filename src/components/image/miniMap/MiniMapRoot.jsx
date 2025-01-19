@@ -15,8 +15,11 @@ const MiniMapRoot = ({ sheetId, setCurrentImage, imageData }) => {
   const [dots, setDots] = useState([
     { x: 20, y: 30, frame: "47/frame_0001.jpg" },
     { x: 50, y: 60, frame: "47/frame_0002.jpg" },
-    { x: 80, y: 90, frame: "47/frame_0003.jpg" },
+    { x: 80, y: 90, frame: "47/frame_0010.jpg" },
   ]);
+
+  // State to track the active dot
+  const [activeDot, setActiveDot] = useState(null);
 
   useEffect(() => {
     const fetchSheet = async () => {
@@ -40,11 +43,15 @@ const MiniMapRoot = ({ sheetId, setCurrentImage, imageData }) => {
     fetchSheet();
   }, [sheetId]);
 
-  const handleDotClick = (frame) => {
-    const targetImage = imageData[frame];
-    if (targetImage) {
-      setCurrentImage(targetImage);
+  // Update the active dot when currentImage changes
+  useEffect(() => {
+    if (imageData && activeDot !== null && imageData[activeDot]) {
+      setCurrentImage(imageData[activeDot]);
     }
+  }, [activeDot, imageData, setCurrentImage]);
+
+  const handleDotClick = (frame) => {
+    setActiveDot(frame);
   };
 
   return (
@@ -69,10 +76,24 @@ const MiniMapRoot = ({ sheetId, setCurrentImage, imageData }) => {
             {dots.map((dot, index) => (
               <div
                 key={index}
-                className="absolute bg-red-500 rounded-full"
+                className={`absolute rounded-full transition-all duration-300 ${
+                  activeDot === dot.frame ? "bg-blue-600" : "bg-blue-400"
+                }`}
                 style={{
-                  width: imageExpandMinimap ? "15px" : "8px",
-                  height: imageExpandMinimap ? "15px" : "8px",
+                  width: imageExpandMinimap
+                    ? activeDot === dot.frame
+                      ? "50px"
+                      : "15px"
+                    : activeDot === dot.frame
+                    ? "30px"
+                    : "8px",
+                  height: imageExpandMinimap
+                    ? activeDot === dot.frame
+                      ? "50px"
+                      : "15px"
+                    : activeDot === dot.frame
+                    ? "30px"
+                    : "8px",
                   top: `${dot.y}%`,
                   left: `${dot.x}%`,
                   transform: "translate(-50%, -50%)",
