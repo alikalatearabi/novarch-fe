@@ -52,6 +52,7 @@ const ThreeScene = ({ imagePath, boxHeight, boxWidth, points }: ThreeSceneProps)
     const planeRef = useRef<THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial, THREE.Object3DEventMap>>(null);
     const [imageSize, setImageSize] = useState({ width: 1, height: 1 });
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         const width = boxWidth || mountRef.current?.clientWidth;
         const height = boxHeight || 300;
@@ -96,6 +97,7 @@ const ThreeScene = ({ imagePath, boxHeight, boxWidth, points }: ThreeSceneProps)
 
             const pixelSize = 20; // Desired size in pixels
             const distance = camera.position.z; // Camera distance
+            // @ts-ignore
             const worldSize = (pixelSize / renderer.getContext().canvas.clientWidth) * (2 * Math.tan((camera.fov * Math.PI) / 360) * distance);
             for (let i = 0; i < pointsRef.current.length; i++) {
                 const dot = pointsRef.current[i];
