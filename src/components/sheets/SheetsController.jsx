@@ -29,8 +29,8 @@ const SheetsController = () => {
   const sheetsSize = useSelector(selectSheetsSize);
 
   return (
-    <div id="sheetsController" className="mx-10 inline-flex flex-col gap-2 bg-white z-10">
-      <div id="view" className="inline-flex flex-col gap-3 border shadow p-1 rounded-xl">
+    <div id="sheetsController" className="mx-10 inline-flex flex-col gap-2 bg-white z-20">
+      <div id="view" className="inline-flex flex-col gap-3 border shadow p-2 rounded-xl">
         {viewsIcon.map((icon, index) => {
           return (
             <span

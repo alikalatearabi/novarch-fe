@@ -101,6 +101,16 @@ export type GetSheetsOfProjectResponse = GeneralResponse<{
     hasVideo: true;
 }[]>
 
+export type GetSheetByIdResponse = GeneralResponse<{
+    id: number;
+    name: number;
+    projectId: number
+    imagePath: string;
+    createdAt: string;
+    hasVideo: true;
+    coordinates: { [frame_key: string]: { x: number; y: number } }
+}>
+
 export const api = {
     csrf: () => axios.get('csrf'),
     auth: {
@@ -128,7 +138,7 @@ export const api = {
             });
         },
         getById: (id: number) => {
-            return axios.get<any, ExtendedAxiosResponse<GeneralResponse<any>>>(`/api/sheets/${id}`);
+            return axios.get<any, ExtendedAxiosResponse<GetSheetByIdResponse>>(`/api/sheets/${id}`);
         }
     },
     project: {

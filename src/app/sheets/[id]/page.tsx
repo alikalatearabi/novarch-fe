@@ -4,22 +4,26 @@ import React, { createRef, useMemo, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { X } from "lucide-react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-
-import Lightbox from "yet-another-react-lightbox";
-import Inline from "yet-another-react-lightbox/plugins/inline";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
-
 import SheetsController from "@/components/sheets/SheetsController";
 import SheetsTimelineRoot from "@/components/sheets/SheetsTimelineRoot";
 import { Button } from "@/components/ui/button";
 import { sheetsData } from "@/utils/constants";
 
-import "yet-another-react-lightbox/styles.css";
+import ThreeScene from "@/components/ThreeScene";
+import { useQuery } from "react-query";
+import { api } from "@/api";
 
 const Page = ({ params }) => {
     const route = useRouter();
+
+    const { data } = useQuery({
+        queryKey: [''],
+        queryFn: async () => {
+            const { data } = await api.sheets.getById(params.id);
+            return data?.responseObject;
+        }
+    });
 
     const dispatch = useDispatch();
     const sheetsCurrent = useSelector(selectSheetsCurrent);
@@ -31,9 +35,9 @@ const Page = ({ params }) => {
     return (
         <div>
             <div id="sheetsRootContainer">
-                <div className="mx-5 relative">
+                <div className="relative">
                     <div id="sheetsCard&Detail">
-                        <div id="sheetsDetailContainer" className="h-[60vh] p-10">
+                        <div id="sheetsDetailContainer" className="h-[60vh] p-4">
                             <header className="flex justify-between">
                                 <div id="sheetsTitle" className="text-[30px]">
                                     {" "}
@@ -51,32 +55,14 @@ const Page = ({ params }) => {
                                     </Button>
                                 </div>
                             </header>
-                            <div id="sheet" onClick={() => route.push(`/images?sheetId=${sheetsCurrent.id}`)} className="flex justify-center mt-5 max-w-[600px] relative">
-                                <Lightbox
-                                    open={true}
-                                    slides={[{ src: sheetsCurrent.plan, alt: sheetsCurrent.title, width: 500 }]}
-                                    plugins={[Zoom, Inline]}
-                                    inline={{
-                                        style: { width: "100%", maxWidth: "500px", aspectRatio: "3 / 2" },
-                                    }}
-                                    render={{
-                                        buttonPrev: () => null,
-                                        buttonNext: () => null,
-                                        buttonZoom: () => null
-                                    }}
-                                    zoom={{
-                                        scrollToZoom: true,
-                                        maxZoomPixelRatio: 3
-                                    }}
-                                    styles={{ container: { backgroundColor: "rgba(0, 0, 0, 0)" } }}
-                                    className="border shadow-lg p-5 rounded-lg"
-                                />
+                            <div id="sheet" onClick={() => route.push(`/images?sheetId=${sheetsCurrent.id}`)} className="flex justify-center mt-5 w-full relative">
+                                <ThreeScene imagePath={sheetsCurrent.plan} points={Object.values(data?.coordinates || {})} />
                             </div>
 
                         </div>
                     </div>
                 </div>
-                <div id="timeLine" className="mx-5 mt-5">
+                <div id="timeLine" className="mt-5 -ms-4">
                     <SheetsTimelineRoot />
                 </div>
             </div>

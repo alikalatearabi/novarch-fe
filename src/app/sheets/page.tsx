@@ -22,6 +22,8 @@ import { errorMessage } from "@/lib/toast";
 import { twMerge } from "tailwind-merge";
 import { useQuery } from "react-query";
 import { Flex, Spinner } from "@radix-ui/themes";
+import MotionDiv from "@/components/transitions/MotionDiv";
+import ListComponent from "@/components/List";
 
 const Page = () => {
   const sheetsDetail = useSelector(selectSheetsDetail);
@@ -39,56 +41,51 @@ const Page = () => {
   const sheetsView = useSelector(selectSheetsView);
   const sheetsSize = useSelector(selectSheetsSize);
   const router = useRouter();
-  
+
   return (
     <div>
       <div id="sheetsRootContainer">
-        <div className="mx-5 relative">
+        <div className="relative">
           <div id="sheetsController" className="absolute bottom-1 left-1">
             <SheetsController />
           </div>
           <div id="sheetsCard&Detail">
-            <div
-              className={twMerge('h-[60vh] overflow-auto p-3', sheetsView === 0 ? "flex flex-wrap transition-transform gap-2" : "gap-1")}
-            >
-              {isLoading ? (
-                <Flex justify="center" align="center" className="w-full min-h-56">
-                  <Spinner size="3" />
-                </Flex>
-              ) : data?.responseObject.map((sheet, index) => {
-                return (
-                  <div className="flex flex-col gap-1" key={index}>
-                    <div
-                      onClick={() => {
-                        dispatch(RsetSheetsCurrent({
-                          id: sheet.id,
-                          title: sheet.name,
-                          plan: getFileAccessUrl(sheet.imagePath),
-                        }));
-                        dispatch(RsetSheetsDetail(true));
-                        router.push(`/sheets/${sheet.id}`)
-                      }}
-                      id="sheetsContent"
-                      className={twMerge('flex transition-all duration-500 overflow-hidden p-5 gap-5 rounded-lg border-2 shadow-sm cursor-pointer hover:border-black', sheetsView === 1 ? "flex-row h-[150px]" : "flex-col justify-center items-center")}
-                    >
-                      <header>{sheet.name}</header>
-                      <div className="relative ml-auto mr-auto" style={{ height: '128px', width: `${sheetsView === 1 ? sheetsSize + 200 : sheetsSize + 125}px`}}>
-                        <Image
-                          src={getFileAccessUrl(sheet.imagePath)}
-                          alt="plan"
-                          fill
-                          objectFit="cover"
-                          className={twMerge('shadow-sm', sheetsView === 1 ? "transform transition-transform duration-500 orbiting" : "")}
-                        />
-                      </div>
+            <ListComponent
+              loading={isLoading}
+              dataSource={data?.responseObject}
+              className={twMerge('h-[60vh] overflow-auto p-3', sheetsView === 0 ? "transition-transform gap-2" : "gap-1 block")}
+              renderItem={(sheet) => (
+                <div className="flex flex-col gap-1 w-full">
+                  <div
+                    onClick={() => {
+                      dispatch(RsetSheetsCurrent({
+                        id: sheet.id,
+                        title: sheet.name,
+                        plan: getFileAccessUrl(sheet.imagePath),
+                      }));
+                      dispatch(RsetSheetsDetail(true));
+                      router.push(`/sheets/${sheet.id}`)
+                    }}
+                    id="sheetsContent"
+                    className={twMerge('flex transition-all duration-500 overflow-hidden p-5 gap-5 rounded-lg border-2 shadow-sm cursor-pointer hover:border-black', sheetsView === 1 ? "flex-row h-[150px]" : "flex-col justify-center items-center")}
+                  >
+                    <header>{sheet.name}</header>
+                    <div className="relative ml-auto mr-auto" style={{ height: '128px', width: `${sheetsView === 1 ? sheetsSize + 200 : sheetsSize + 125}px` }}>
+                      <Image
+                        src={getFileAccessUrl(sheet.imagePath)}
+                        alt="plan"
+                        fill
+                        objectFit="cover"
+                        className={twMerge('-z-10', sheetsView === 1 ? "transform transition-transform duration-500 orbiting" : "")}
+                      />
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              )}
+            />
           </div>
         </div>
-        <div id="timeLine" className="mx-5 mt-5">
+        <div id="timeLine" className="mt-5 -ms-4">
           <SheetsTimelineRoot />
         </div>
       </div>
