@@ -55,7 +55,7 @@ const RecentSheetCard = ({ sheets, setSheets }) => {
                                 <div className="user-avatar">
                                     <FaUser />
                                 </div>
-                                <span className="user-name">نام کاربر</span>
+                                <span className="user-name">پیمان نوری</span>
                             </div>
                             <div className="sheet-date">
                                 {convertToPersianDigits(formatToJalali(sheet.createdAt))}
