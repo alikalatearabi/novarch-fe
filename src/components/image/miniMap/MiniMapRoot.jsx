@@ -76,6 +76,8 @@ const MiniMapRoot = ({ sheetId, setCurrentImage, imageData }) => {
     setActiveDot(frame);
   };
 
+  useEffect(() => {console.log(imageRef)}, [imageRef])
+
   return (
     <div
       id="miniMapRootContainer"

@@ -12,7 +12,7 @@ export const sidebarItems = {
     { label: "تایم لپس ها", href: "/timelapses", icon: Clock },
     { 
       label: "مدیریت پروژه", 
-      href: "http://185.243.48.218:8082", 
+      href: "https://pt.novaarchai.com", 
       icon: NotebookPen, 
       external: true // Optional: For differentiating external links
     },
