@@ -5,6 +5,7 @@ import VirtualTour from "./virtualTour";
 import ImageSideControllerRoot from "./controllers/ImageSideControllerRoot";
 import ImageFilterCaptureControllerRoot from "./controllers/ImageFilterCaptureControllerRoot";
 import MiniMapRoot from "./miniMap/MiniMapRoot";
+import { api } from "@/api";
 
 const ImageRoot = () => {
   const searchParams = useSearchParams();
@@ -25,7 +26,7 @@ const ImageRoot = () => {
           const frames = result.responseObject.frames;
           const data = frames.reduce((acc, frame, index) => {
             acc[frame.name] = {
-              imageUrl: `https://files.novaarchai.com/${frame.url}`,
+              imageUrl: frame.url,
               forward: index < frames.length - 1 ? { targetImage: frames[index + 1].name } : undefined,
               backward: index > 0 ? { targetImage: frames[index - 1].name } : undefined,
             };

@@ -6,6 +6,7 @@ import UploadVideoModal from "./UploadVideoModal";
 import { useRouter } from "next/navigation";
 import "./HomeSheetCard.css"; 
 import { IconButton } from "@radix-ui/themes";
+import { ImageComponent } from "../Image";
 
 const HomeSheetCard = ({ sheets, setSheets }) => {
   const [selectedSheet, setSelectedSheet] = useState(null);
@@ -93,7 +94,8 @@ const HomeSheetCard = ({ sheets, setSheets }) => {
 
             {/* Main card content */}
             <div id="plansImage">
-              <Image
+              <ImageComponent
+                isSecured
                 src={sheet.image}
                 width={140}
                 height={30}

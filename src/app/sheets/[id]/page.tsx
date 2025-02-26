@@ -1,6 +1,6 @@
 "use client";
 import { RsetSheetsDetail, selectSheetsCurrent, selectSheetsDetail } from "@/slices/sheetsSlices";
-import React, { createRef, useMemo, useRef } from "react";
+import React, { createRef, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { X } from "lucide-react";
@@ -16,6 +16,7 @@ import { api } from "@/api";
 
 const Page = ({ params }) => {
     const route = useRouter();
+    const [imageLink, setImageLink] = useState<string>();
 
     const { data } = useQuery({
         queryKey: [''],
@@ -31,6 +32,14 @@ const Page = ({ params }) => {
     //     const id = parseInt(params.id);
     //     return sheetsData[id];
     // }, [params]);
+
+    useEffect(() => {
+        api.files.getPresignedLink(sheetsCurrent.plan).then((res) => {
+            if (res.ok) {
+                setImageLink(res.data);
+            }
+        });
+    }, [sheetsCurrent.plan]);
 
     return (
         <div>
@@ -56,7 +65,7 @@ const Page = ({ params }) => {
                                 </div>
                             </header>
                             <div id="sheet" onClick={() => route.push(`/images?sheetId=${sheetsCurrent.id}`)} className="flex justify-center mt-5 w-full relative">
-                                <ThreeScene imagePath={sheetsCurrent.plan} points={Object.values(data?.coordinates || {})} />
+                                <ThreeScene imagePath={imageLink} points={Object.values(data?.coordinates || {})} />
                             </div>
 
                         </div>

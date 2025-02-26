@@ -1,4 +1,5 @@
 // src/ThreeScene.js
+import { token } from '@/api';
 import React, { use, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 

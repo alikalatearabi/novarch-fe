@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import Image from "next/image";
 import { User } from "lucide-react";
 import Plans from "../../../public/images/plansImage.jpg";
+import { ImageComponent } from "../Image";
 const captureData = [
   {
     username: "شایان گلستانی",
@@ -52,7 +53,7 @@ const LatesCapture = () => {
             className="inline-flex flex-col gap-3 cursor-pointer hover:shadow-lg transition-shadow 0.6s p-5 rounded-lg w-[400px]"
           >
             <div id="captureImage">
-              <Image src={Plans} alt="test" width={300}/>
+              <ImageComponent isSecured src={Plans} alt="test" width={300}/>
             </div>
             <div id="user" className="flex gap-2 items-center">
               <span className=" border bg-gray-100 p-1 rounded-full">

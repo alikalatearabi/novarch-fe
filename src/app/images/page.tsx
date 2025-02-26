@@ -7,6 +7,7 @@ import ImageSideControllerRoot from "../../components/image/controllers/ImageSid
 import ImageFilterCaptureControllerRoot from "../../components/image/controllers/ImageFilterCaptureControllerRoot";
 import MiniMapRoot from "../../components/image/miniMap/MiniMapRoot";
 import { useSheet } from "@/context/sheetContext";
+import { api } from "@/api";
 
 const ImageRoot = () => {
   const searchParams = useSearchParams();
@@ -22,18 +23,15 @@ const ImageRoot = () => {
 
     async function fetchFrames() {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_ADDRESS}/api/upload/frames/${sheetId}`
-        );
-        const result = await response.json();
+        const res = await api.upload.getFramesOfSheet(sheetId);
 
-        if (result.success) {
-          const frames = result.responseObject.frames;
-          const uploadedtime = result.responseObject.uploadedAt;
+        if (res.ok) {
+          const frames = res.data.responseObject.frames;
+          const uploadedtime = res.data.responseObject.uploadedAt;
 
           const data = frames.reduce((acc, frame, index) => {
             acc[frame.name] = {
-              imageUrl: `https://files.novaarchai.com/${frame.url}`,
+              imageUrl: frame.url,
               uploadedAt: uploadedtime,
               forward:
                 index < frames.length - 1

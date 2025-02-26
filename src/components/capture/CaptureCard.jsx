@@ -2,12 +2,14 @@ import Image from "next/image";
 import React from "react";
 import { Video } from "lucide-react";
 import "./CaptureCard.css";
+import { ImageComponent } from "../Image";
 
 const CaptureCard = ({ image, date, location, hasVideo }) => {
   return (
     <div id="cardContainer" className="capture-card-container">
       <div id="imageCard" className="capture-card-image">
-        <Image
+        <ImageComponent
+          isSecured
           src={image}
           layout="responsive"
           width={100}

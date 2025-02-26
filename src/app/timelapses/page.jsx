@@ -8,6 +8,7 @@ import { EllipsisVertical, Lock, MapPin, Unlock } from "lucide-react";
 import ListComponent from "@/components/List";
 import { useQuery } from "react-query";
 import { sleep } from "@/utils/sleep";
+import { ImageComponent } from "@/components/Image";
 
 const timelapsData = [
   {
@@ -96,7 +97,8 @@ const Page = () => {
           renderItem={(item, index) => (
             <div key={index} id="cardContainer" className="hover:shadow-md transition-shadow p-3 rounded-2xl cursor-pointer">
               <div id="imageContainer" className="relative">
-                <Image
+                <ImageComponent
+                  isSecured
                   src={item.imageUrl}
                   width={350}
                   height={350}

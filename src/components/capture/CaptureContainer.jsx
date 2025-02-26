@@ -33,7 +33,7 @@ const CaptureContainer = () => {
             id: sheet.id,
             title: sheet.name,
             date: new Date(sheet.createdAt).toLocaleDateString("fa-IR"), // Format date
-            image: `https://files.novaarchai.com/${sheet.imagePath}`, // Sheet image URL
+            image: sheet.imagePath, // Sheet image URL
             location: sheet.location || "نامشخص", // Add location if available
             hasVideo: sheet.hasVideo,
           }));

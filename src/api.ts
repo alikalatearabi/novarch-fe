@@ -1,5 +1,6 @@
 'use client'
 import Axios, { AxiosResponse } from 'axios';
+import Cookies from 'js-cookie';
 
 interface GeneralResponse<T> {
     success: number;
@@ -66,6 +67,7 @@ axios.interceptors.response.use(
             try {
                 const { accessToken, refreshToken } = await refreshAccessToken();
                 setToken({ accessToken, refreshToken });
+                Cookies.set('token', accessToken);
                 if (accessToken) {
                     originalRequest.headers['Authorization'] = 'Bearer ' + accessToken;
                     return axios(originalRequest);
@@ -151,9 +153,18 @@ export const api = {
         delete: (id: any) => {
             return axios.delete(`/api/project/${id}`);
         },
+    },
+    upload: {
+        getFramesOfSheet: (sheetId: string) => {
+            return axios.get<any, ExtendedAxiosResponse<GeneralResponse<any>>>(`/api/upload/frames/${sheetId}`);
+        }
+    },
+    files: {
+        downloadFileUrl: (path) => {
+            return new URL(`/api/files/${path}`, baseURL).href;
+        },
+        getPresignedLink: (path) => {
+            return axios.get<any, ExtendedAxiosResponse<string>>(`/api/files/presigned/${path}`);
+        }
     }
 };
-
-export const getFileAccessUrl = (path: string) => {
-    return new URL(path, 'https://files.novaarchai.com/').href;
-}

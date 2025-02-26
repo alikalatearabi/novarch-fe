@@ -2,26 +2,31 @@ import React, { useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
+import { api } from '@/api';
 
 const VirtualTour = ({ currentImage }) => {
   const [texture, setTexture] = useState(null);
   const [imageName, setImageName] = useState("");
 
+  const loadCurrentImage = async () => {
+    // Extract the image name from the URL
+    const imageUrlParts = currentImage.imageUrl.split("/");
+    const name = imageUrlParts[imageUrlParts.length - 1]; // Extract last part of the URL
+    setImageName(name);
+
+    // Load the texture
+    const textureLoader = new THREE.TextureLoader();
+    const signedUrl = await api.files.getPresignedLink(currentImage.imageUrl);
+    textureLoader.load(signedUrl.data, (loadedTexture) => {
+      loadedTexture.wrapS = THREE.RepeatWrapping;
+      loadedTexture.wrapT = THREE.RepeatWrapping;
+      loadedTexture.repeat.x = -1;
+      setTexture(loadedTexture);
+    });
+  }
   useEffect(() => {
     if (currentImage) {
-      // Extract the image name from the URL
-      const imageUrlParts = currentImage.imageUrl.split("/");
-      const name = imageUrlParts[imageUrlParts.length - 1]; // Extract last part of the URL
-      setImageName(name);
-
-      // Load the texture
-      const textureLoader = new THREE.TextureLoader();
-      textureLoader.load(currentImage.imageUrl, (loadedTexture) => {
-        loadedTexture.wrapS = THREE.RepeatWrapping;
-        loadedTexture.wrapT = THREE.RepeatWrapping;
-        loadedTexture.repeat.x = -1;
-        setTexture(loadedTexture);
-      });
+      loadCurrentImage();
     }
   }, [currentImage]);
 

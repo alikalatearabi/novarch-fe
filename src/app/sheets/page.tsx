@@ -10,7 +10,7 @@ import {
   RsetSheetsDetail,
   RsetSheetsView,
 } from "@/slices/sheetsSlices";
-import { api, getFileAccessUrl, GetSheetsOfProjectResponse } from "@/api";
+import { api, GetSheetsOfProjectResponse } from "@/api";
 import { useProject } from "@/context/projectContext";
 import { sheetsData } from "@/utils/constants";
 import { useRouter } from "next/navigation";
@@ -24,6 +24,7 @@ import { useQuery } from "react-query";
 import { Flex, Spinner } from "@radix-ui/themes";
 import MotionDiv from "@/components/transitions/MotionDiv";
 import ListComponent from "@/components/List";
+import { ImageComponent } from "@/components/Image";
 
 const Page = () => {
   const sheetsDetail = useSelector(selectSheetsDetail);
@@ -61,7 +62,7 @@ const Page = () => {
                       dispatch(RsetSheetsCurrent({
                         id: sheet.id,
                         title: sheet.name,
-                        plan: getFileAccessUrl(sheet.imagePath),
+                        plan: sheet.imagePath,
                       }));
                       dispatch(RsetSheetsDetail(true));
                       router.push(`/sheets/${sheet.id}`)
@@ -71,8 +72,9 @@ const Page = () => {
                   >
                     <header>{sheet.name}</header>
                     <div className="relative ml-auto mr-auto" style={{ height: '128px', width: `${sheetsView === 1 ? sheetsSize + 200 : sheetsSize + 125}px` }}>
-                      <Image
-                        src={getFileAccessUrl(sheet.imagePath)}
+                      <ImageComponent
+                        isSecured
+                        src={sheet.imagePath}
                         alt="plan"
                         fill
                         objectFit="cover"

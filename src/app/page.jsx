@@ -37,7 +37,7 @@ const Page = () => {
             id: sheet.id,
             title: sheet.name,
             date: new Date().toLocaleDateString("fa-IR"),
-            image: `https://files.novaarchai.com/${sheet.imagePath}`,
+            image: sheet.imagePath,
             createdAt: sheet.createdAt,
             hasVideo: sheet.hasVideo,
           }));

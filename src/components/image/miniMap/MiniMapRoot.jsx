@@ -6,6 +6,7 @@ import { Expand, Minimize } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import "./MiniMap.css";
 import { api } from "@/api";
+import { ImageComponent } from "@/components/Image";
 
 const MiniMapRoot = ({ sheetId, setCurrentImage, imageData }) => {
   const [sheetData, setSheetData] = useState(null);
@@ -121,8 +122,9 @@ const MiniMapRoot = ({ sheetId, setCurrentImage, imageData }) => {
       <div id="planImage" className="h-full flex items-center justify-center border relative">
         {sheetData ? (
           <>
-            <Image
-              src={`https://files.novaarchai.com/${sheetData.responseObject.imagePath}`}
+            <ImageComponent
+              isSecured
+              src={sheetData.responseObject.imagePath}
               alt={sheetData.name || "MiniMap"}
               className="my-auto cursor-pointer"
               width={imageDimensions.renderedWidth}

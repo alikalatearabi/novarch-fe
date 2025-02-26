@@ -5,6 +5,7 @@ import { FaUser } from "react-icons/fa";
 import { toJalaali } from "jalaali-js";
 import UploadVideoModal from "./UploadVideoModal";
 import "./RecentSheetCard.css";
+import { ImageComponent } from "../Image";
 
 const RecentSheetCard = ({ sheets, setSheets }) => {
     const [selectedSheet, setSelectedSheet] = useState(null);
@@ -40,7 +41,8 @@ const RecentSheetCard = ({ sheets, setSheets }) => {
                     <div key={index} className="recent-sheet-card">
                         {/* Image */}
                         <div className="sheet-image-container">
-                            <Image
+                            <ImageComponent
+                                isSecured
                                 src={sheet.image}
                                 width={300}
                                 height={150}

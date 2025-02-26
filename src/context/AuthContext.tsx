@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import { useLocalStorage } from 'usehooks-ts';
 import { api } from '@/api';
 import { AxiosError } from 'axios';
+import Cookies from 'js-cookie';
 
 interface IJwtPayload {
     role?: string;
@@ -78,6 +79,7 @@ export const AuthProvider = ({ children }) => {
                     setToken({
                         ...data.responseObject,
                     });
+                    Cookies.set('token', data.responseObject.accessToken)
                     await fetchUserInfo();
                     return { status: true, message: data.message };
                 } else {
